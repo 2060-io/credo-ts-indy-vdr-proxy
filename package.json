@@ -1,0 +1,79 @@
+{
+  "name": "aries-framework-indy-vdr-proxy",
+  "private": true,
+  "license": "Apache-2.0",
+  "description": "Monorepo containing Indy VDR Proxy client and server for Aries Framework JavaScript",
+  "workspaces": {
+    "packages": [
+      "packages/*"
+    ],
+    "nohoist": [
+      "@aries-framework/node",
+      "**/@aries-framework/node",
+      "**/@aries-framework/node/**",
+      "@aries-framework/node/**",
+      "@aries-framework/core",
+      "**/@aries-framework/core",
+      "**/@aries-framework/core/**",
+      "@aries-framework/core/**",
+      "tsyringe",
+      "**/tsyringe",
+      "**/tsyringe/**",
+      "tsyringe/**",
+      "reflect-metadata",
+      "**/reflect-metadata",
+      "**/reflect-metadata/**",
+      "reflect-metadata/**",
+      "class-validator",
+      "**/class-validator",
+      "**/class-validator/**",
+      "class-validator/**",
+      "class-transformer",
+      "**/class-transformer",
+      "**/class-transformer/**",
+      "class-transformer/**"
+    ]
+  },
+  "repository": {
+    "url": "https://github.com/2060-io/aries-javascript-indy-vdr-proxy",
+    "type": "git"
+  },
+  "scripts": {
+    "check-types": "yarn check-types:build",
+    "check-types:build": "yarn workspaces run tsc --noEmit -p tsconfig.build.json",
+    "prettier": "prettier '**/*.+(js|json|ts|md|yml|yaml)'",
+    "format": "yarn prettier --write",
+    "check-format": "yarn prettier --list-different",
+    "test": "jest",
+    "lint": "eslint --ignore-path .gitignore .",
+    "validate": "yarn lint && yarn check-types && yarn check-format",
+    "prepare": "husky install"
+  },
+  "devDependencies": {
+    "@types/eslint": "^8.2.1",
+    "@types/jest": "^27.0.1",
+    "@types/node": "^16.7.10",
+    "@types/ws": "^8.2.1",
+    "@typescript-eslint/eslint-plugin": "^5.5.0",
+    "@typescript-eslint/parser": "^5.5.0",
+    "conventional-changelog-conventionalcommits": "^4.6.0",
+    "eslint": "^8.4.0",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-import-resolver-typescript": "^2.4.0",
+    "eslint-plugin-import": "^2.23.4",
+    "eslint-plugin-prettier": "^4.0.0",
+    "husky": "^7.0.1",
+    "jest": "^27.0.4",
+    "prettier": "^2.3.1",
+    "ts-jest": "^27.0.3",
+    "ts-node": "^10.2.1",
+    "tsconfig-paths": "^3.9.0",
+    "typescript": "~4.9.5"
+  },
+  "engines": {
+    "node": ">= 16"
+  },
+  "resolutions": {
+    "ref-napi": "npm:@2060.io/ref-napi"
+  }
+}
