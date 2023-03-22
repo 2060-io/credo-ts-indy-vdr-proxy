@@ -13,7 +13,7 @@ import type { AgentContext } from "@aries-framework/core"
 
 import { indyVdrAnonCredsRegistryIdentifierRegex } from "./identifiers"
 
-export class IndyVdrAnonCredsRegistry implements AnonCredsRegistry {
+export class IndyVdrProxyAnonCredsRegistry implements AnonCredsRegistry {
   public readonly supportedIdentifier = indyVdrAnonCredsRegistryIdentifierRegex
 
   private proxyBaseUrl: string

@@ -1,6 +1,6 @@
 import type { DidResolutionResult, ParsedDid, DidResolver, AgentContext } from "@aries-framework/core"
 
-export class IndyVdrProxyClientDidResolver implements DidResolver {
+export class IndyVdrProxyDidResolver implements DidResolver {
   public readonly supportedMethods = ["sov", "indy"]
 
   private proxyBaseUrl: string
