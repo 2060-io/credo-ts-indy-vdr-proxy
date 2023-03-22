@@ -4,7 +4,34 @@ A server that exposes a REST API to resolve objects in Indy networks. It is buil
 
 Although it can be used as a general gateway to multiple Indy networks (much in the same way [Universal Resolver](https://dev.uniresolver.io/) does), this server was developed to reduce the workload needed by a mobile application, as multiple ZMQ sockets must be opened when supporting multiple Indy networks and there might be issues in some mobile OS and Mobile Network Operators.
 
-Configuration, such as port and supported networks, are currently hard-coded in `main.ts` and `agent.ts`. Defaults to [BCovrin Test network](http://test.bcovrin.vonx.io/) and port 3000.
+### Usage
+
+In order to run the server in standalone mode, you just need to install all dependencies by doing:
+
+```
+yarn install
+```
+
+and then go to server directory and execute:
+
+```
+cd packages/server
+yarn run start
+```
+
+By default, Indy VDR Proxy Server runs at port 3000 and supports only [BCovrin Test network](http://test.bcovrin.vonx.io/). This can be overriden by either updating the configuration file located at `res/app.config.json` or providing your own by setting the environment variable `INDY_VDR_PROXY_CONFIG_PATH`. E.g.:
+
+```
+INDY_VDR_PROXY_CONFIG_PATH=/my-directory/my-config.file.json yarn run start
+```
+
+If you want to integrate Indy VDR Proxy in your own NestJS-based project, you can by importing `IndyVdrProxyServerModule`. You'll need to call `register` method passing an `IndyVdrProxyAgent` instance (which could be your own AFJ-based Agent as long as it contains all required modules):
+
+```ts
+import { setupAgent } from "aries-framework-indy-vdr-proxy-server"
+
+IndyVdrProxyModule.register(setupAgent({ networks }))
+```
 
 ### Endpoints
 

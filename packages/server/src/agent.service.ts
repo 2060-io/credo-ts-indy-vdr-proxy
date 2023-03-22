@@ -1,13 +1,9 @@
-import { Injectable } from "@nestjs/common"
-import { IndyVdrProxyAgent, setupAgent } from "./agent"
+import { Inject, Injectable } from "@nestjs/common"
+import { IndyVdrProxyAgent } from "./agent"
 
 @Injectable()
 export class AgentService {
-  private agent: IndyVdrProxyAgent
-
-  public constructor() {
-    this.agent = setupAgent()
-  }
+  constructor(@Inject("AGENT") private agent: IndyVdrProxyAgent) {}
 
   async getAgent(): Promise<IndyVdrProxyAgent> {
     if (!this.agent.isInitialized) {

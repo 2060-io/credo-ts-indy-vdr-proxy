@@ -1,4 +1,5 @@
-import { Module } from "@nestjs/common"
+import { DynamicModule, Module } from "@nestjs/common"
+import { IndyVdrProxyAgent } from "./agent"
 import { AgentService } from "./agent.service"
 import { CredentialDefinitionController } from "./creddef.controller"
 import { DidController } from "./did.controller"
@@ -6,15 +7,26 @@ import { RevocationRegistryDefinitionController } from "./revregdef.controller"
 import { RevocationStatusListController } from "./revstatuslist.controller"
 import { SchemaController } from "./schema.controller"
 
-@Module({
-  imports: [],
-  controllers: [
-    DidController,
-    SchemaController,
-    CredentialDefinitionController,
-    RevocationRegistryDefinitionController,
-    RevocationStatusListController,
-  ],
-  providers: [AgentService],
-})
-export class AppModule {}
+@Module({})
+export class IndyVdrProxyModule {
+  static register(agent: IndyVdrProxyAgent): DynamicModule {
+    return {
+      module: IndyVdrProxyModule,
+      controllers: [
+        DidController,
+        SchemaController,
+        CredentialDefinitionController,
+        RevocationRegistryDefinitionController,
+        RevocationStatusListController,
+      ],
+      providers: [
+        {
+          provide: "AGENT",
+          useValue: agent,
+        },
+        AgentService,
+      ],
+      exports: [AgentService],
+    }
+  }
+}
