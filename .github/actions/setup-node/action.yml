@@ -1,6 +1,6 @@
 name: Setup NodeJS
 description: Setup NodeJS with caching
-author: 'timo@animo.id'
+author: "timo@animo.id"
 
 inputs:
   node-version:
@@ -26,7 +26,7 @@ runs:
       uses: actions/setup-node@v2
       with:
         node-version: ${{ inputs.node-version }}
-        registry-url: 'https://registry.npmjs.org/'
+        registry-url: "https://registry.npmjs.org/"
 
 branding:
   icon: scissors
