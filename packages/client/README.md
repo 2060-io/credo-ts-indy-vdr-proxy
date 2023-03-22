@@ -1,11 +1,10 @@
 # Aries JavaScript Indy VDR Proxy client
 
-This package provides some convenient classes to allow an Agent built on [Aries Framework JavaScript](https://github.com/hyperledger/aries-framework-javascript) resolve DIDs and AnonCreds objects from a number of Indy networks without the need of embedding any [indy-vdr](https://github.com/hyperledger/aries-framework-javascript) client binary. 
+This package provides some convenient classes to allow an Agent built on [Aries Framework JavaScript](https://github.com/hyperledger/aries-framework-javascript) resolve DIDs and AnonCreds objects from a number of Indy networks without the need of embedding any [indy-vdr](https://github.com/hyperledger/aries-framework-javascript) client binary.
 
-Especially conceived for mobile agents use case, this makes the app lighter and avoids the need of managing ZMQ sockets, as only a simple HTTP REST API is used to retrieve Indy objects. 
+Especially conceived for mobile agents use case, this makes the app lighter and avoids the need of managing ZMQ sockets, as only a simple HTTP REST API is used to retrieve Indy objects.
 
 It works with its companion [Aries JavaScript Indy VDR Proxy Server](https://github.com/2060-io/aries-javascript-indy-vdr-proxy/packages/server), expected to be run as a server trusted by the mobile app (as all Indy transactions will go through it).
-
 
 ## Usage
 
@@ -21,12 +20,12 @@ const agent = new Agent({
     /* agent config */
   },
   dependencies,
-  modules: { 
-    /* ... */ 
+  modules: {
+    /* ... */
     anoncreds: new AnonCredsModule({ registries: [ /* ... */ new IndyVdrProxyAnonCredsRegistry(proxyBaseUrl)] }),
     dids: new DidsModule({
       resolvers: [
-        /* ... */ 
+        /* ... */
         new IndyVdrProxyDidResolver(proxyBaseUrl),
       ],
      },
