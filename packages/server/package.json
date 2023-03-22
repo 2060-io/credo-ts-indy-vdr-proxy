@@ -1,7 +1,7 @@
 {
-  "name": "@aries-framework-indy-vdr-proxy/server",
+  "name": "aries-framework-indy-vdr-proxy-server",
   "version": "0.1.0",
-  "description": "Indy VDR Proxy client for aries-framework-javascript",
+  "description": "Indy VDR Proxy server based on aries-framework-javascript",
   "author": "2060.io",
   "homepage": "https://github.com/2060-io/aries-javascript-indy-vdr-proxy",
   "license": "ISC",

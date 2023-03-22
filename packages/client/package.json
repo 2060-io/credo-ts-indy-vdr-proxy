@@ -1,5 +1,5 @@
 {
-  "name": "@aries-framework-indy-vdr-proxy/client",
+  "name": "aries-framework-indy-vdr-proxy-client",
   "version": "0.0.1",
   "description": "Indy VDR Proxy client for aries-framework-javascript",
   "author": "2060.io",
