@@ -1,5 +1,12 @@
 # Changelog
 
+### [0.1.2](https://www.github.com/2060-io/aries-javascript-indy-vdr-proxy/compare/aries-framework-indy-vdr-proxy-server-v0.1.1...aries-framework-indy-vdr-proxy-server-v0.1.2) (2023-03-23)
+
+
+### Bug Fixes
+
+* **server:** use build as dist directory ([c928d96](https://www.github.com/2060-io/aries-javascript-indy-vdr-proxy/commit/c928d960e36d10092c5b33e319c78d46fb80bb62))
+
 ### [0.1.1](https://www.github.com/2060-io/aries-javascript-indy-vdr-proxy/compare/aries-framework-indy-vdr-proxy-server-v0.1.0...aries-framework-indy-vdr-proxy-server-v0.1.1) (2023-03-23)
 
 
