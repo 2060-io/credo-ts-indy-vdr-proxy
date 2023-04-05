@@ -14,6 +14,8 @@ import type { AgentContext } from "@aries-framework/core"
 import { indyVdrAnonCredsRegistryIdentifierRegex } from "./identifiers"
 
 export class IndyVdrProxyAnonCredsRegistry implements AnonCredsRegistry {
+  public readonly methodName = "indy"
+
   public readonly supportedIdentifier = indyVdrAnonCredsRegistryIdentifierRegex
 
   private proxyBaseUrl: string
@@ -21,6 +23,7 @@ export class IndyVdrProxyAnonCredsRegistry implements AnonCredsRegistry {
   public constructor(proxyBaseUrl: string) {
     this.proxyBaseUrl = proxyBaseUrl
   }
+
   public async getSchema(agentContext: AgentContext, schemaId: string): Promise<GetSchemaReturn> {
     try {
       const response = await agentContext.config.agentDependencies.fetch(`${this.proxyBaseUrl}/schema/${schemaId}`)
