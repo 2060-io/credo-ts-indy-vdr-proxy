@@ -10,7 +10,7 @@ export class RevocationRegistryDefinitionController {
   public async getRevocationRegistryDefinition(@Param() params): Promise<GetRevocationRegistryDefinitionReturn> {
     const agent = await this.agentService.getAgent()
     const getRevocationRegistryDefinitionReturn = await agent.modules.anoncreds.getRevocationRegistryDefinition(
-      params.credentialDefinitionId
+      params.revocationRegistryDefinition
     )
     return getRevocationRegistryDefinitionReturn
   }
