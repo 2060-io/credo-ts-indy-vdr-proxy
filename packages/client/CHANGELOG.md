@@ -1,5 +1,12 @@
 # Changelog
 
+### [0.1.3](https://www.github.com/2060-io/aries-javascript-indy-vdr-proxy/compare/aries-framework-indy-vdr-proxy-client-v0.1.2...aries-framework-indy-vdr-proxy-client-v0.1.3) (2023-09-20)
+
+
+### Bug Fixes
+
+* **client:** response on failure and URI encode identifiers ([b4ebc5b](https://www.github.com/2060-io/aries-javascript-indy-vdr-proxy/commit/b4ebc5b8e3a58b7202bce843a54d9bc00afaddb5))
+
 ### [0.1.2](https://www.github.com/2060-io/aries-javascript-indy-vdr-proxy/compare/aries-framework-indy-vdr-proxy-client-v0.1.1...aries-framework-indy-vdr-proxy-client-v0.1.2) (2023-04-05)
 
 ### Features
