@@ -26,7 +26,19 @@ export class IndyVdrProxyAnonCredsRegistry implements AnonCredsRegistry {
 
   public async getSchema(agentContext: AgentContext, schemaId: string): Promise<GetSchemaReturn> {
     try {
-      const response = await agentContext.config.agentDependencies.fetch(`${this.proxyBaseUrl}/schema/${schemaId}`)
+      const response = await agentContext.config.agentDependencies.fetch(
+        `${this.proxyBaseUrl}/schema/${encodeURIComponent(schemaId)}`
+      )
+      if (!response.ok) {
+        return {
+          schemaId,
+          resolutionMetadata: {
+            error: "failed",
+            message: `server status code: ${response.status}`,
+          },
+          schemaMetadata: {},
+        }
+      }
 
       return (await response.json()) as GetSchemaReturn
     } catch (error) {
@@ -66,9 +78,19 @@ export class IndyVdrProxyAnonCredsRegistry implements AnonCredsRegistry {
   ): Promise<GetCredentialDefinitionReturn> {
     try {
       const response = await agentContext.config.agentDependencies.fetch(
-        `${this.proxyBaseUrl}/credential-definition/${credentialDefinitionId}`
+        `${this.proxyBaseUrl}/credential-definition/${encodeURIComponent(credentialDefinitionId)}`
       )
 
+      if (!response.ok) {
+        return {
+          credentialDefinitionId,
+          resolutionMetadata: {
+            error: "failed",
+            message: `server status code: ${response.status}`,
+          },
+          credentialDefinitionMetadata: {},
+        }
+      }
       return (await response.json()) as GetCredentialDefinitionReturn
     } catch (error) {
       agentContext.config.logger.error(`Error retrieving credential definition '${credentialDefinitionId}'`, {
@@ -108,8 +130,19 @@ export class IndyVdrProxyAnonCredsRegistry implements AnonCredsRegistry {
   ): Promise<GetRevocationRegistryDefinitionReturn> {
     try {
       const response = await agentContext.config.agentDependencies.fetch(
-        `${this.proxyBaseUrl}/revocation-registry-definition/${revocationRegistryDefinitionId}`
+        `${this.proxyBaseUrl}/revocation-registry-definition/${encodeURIComponent(revocationRegistryDefinitionId)}`
       )
+      if (!response.ok) {
+        return {
+          revocationRegistryDefinitionId,
+          resolutionMetadata: {
+            error: "failed",
+            message: `server status code: ${response.status}`,
+          },
+          revocationRegistryDefinitionMetadata: {},
+        }
+      }
+
       return (await response.json()) as GetRevocationRegistryDefinitionReturn
     } catch (error) {
       agentContext.config.logger.error(
@@ -138,8 +171,18 @@ export class IndyVdrProxyAnonCredsRegistry implements AnonCredsRegistry {
   ): Promise<GetRevocationStatusListReturn> {
     try {
       const response = await agentContext.config.agentDependencies.fetch(
-        `${this.proxyBaseUrl}/revocation-status-list/${revocationRegistryId}/${timestamp}`
+        `${this.proxyBaseUrl}/revocation-status-list/${encodeURIComponent(revocationRegistryId)}/${timestamp}`
       )
+      if (!response.ok) {
+        return {
+          resolutionMetadata: {
+            error: "failed",
+            message: `server status code: ${response.status}`,
+          },
+          revocationStatusListMetadata: {},
+        }
+      }
+
       return (await response.json()) as GetRevocationStatusListReturn
     } catch (error) {
       agentContext.config.logger.error(

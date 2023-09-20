@@ -13,7 +13,19 @@ export class IndyVdrProxyDidResolver implements DidResolver {
     const didDocumentMetadata = {}
 
     try {
-      const response = await agentContext.config.agentDependencies.fetch(`${this.proxyBaseUrl}/did/${did}`)
+      const response = await agentContext.config.agentDependencies.fetch(
+        `${this.proxyBaseUrl}/did/${encodeURIComponent(did)}`
+      )
+      if (!response.ok) {
+        return {
+          didDocument: null,
+          didDocumentMetadata,
+          didResolutionMetadata: {
+            error: "failed",
+            message: `resolver_error: Unable to resolve did '${did}': server status ${response.status}`,
+          },
+        }
+      }
       return (await response.json()) as DidResolutionResult
     } catch (error) {
       return {
