@@ -1,5 +1,12 @@
 # Changelog
 
+### [0.1.6](https://www.github.com/2060-io/aries-javascript-indy-vdr-proxy/compare/aries-framework-indy-vdr-proxy-server-v0.1.5...aries-framework-indy-vdr-proxy-server-v0.1.6) (2023-09-26)
+
+
+### Bug Fixes
+
+* **server:** revocation-status-list endpoint ([c3e1ba5](https://www.github.com/2060-io/aries-javascript-indy-vdr-proxy/commit/c3e1ba5dbb03d5b6cab18b2d43d375102dcf6254))
+
 ### [0.1.5](https://www.github.com/2060-io/aries-javascript-indy-vdr-proxy/compare/aries-framework-indy-vdr-proxy-server-v0.1.4...aries-framework-indy-vdr-proxy-server-v0.1.5) (2023-09-20)
 
 
