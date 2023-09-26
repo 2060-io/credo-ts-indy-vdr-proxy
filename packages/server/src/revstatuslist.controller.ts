@@ -2,7 +2,7 @@ import { Controller, Get, Param } from "@nestjs/common"
 import { AgentService } from "./agent.service"
 import { GetRevocationStatusListReturn } from "@aries-framework/anoncreds/build/services/registry"
 
-@Controller("revocation-registry-definition")
+@Controller("revocation-status-list")
 export class RevocationStatusListController {
   constructor(private readonly agentService: AgentService) {}
 
