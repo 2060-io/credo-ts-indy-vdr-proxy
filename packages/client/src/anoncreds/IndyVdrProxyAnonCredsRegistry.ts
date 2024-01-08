@@ -8,6 +8,10 @@ import type {
   RegisterCredentialDefinitionReturn,
   GetRevocationStatusListReturn,
   GetRevocationRegistryDefinitionReturn,
+  RegisterRevocationRegistryDefinitionOptions,
+  RegisterRevocationRegistryDefinitionReturn,
+  RegisterRevocationStatusListOptions,
+  RegisterRevocationStatusListReturn,
 } from "@aries-framework/anoncreds"
 import type { AgentContext } from "@aries-framework/core"
 
@@ -164,6 +168,20 @@ export class IndyVdrProxyAnonCredsRegistry implements AnonCredsRegistry {
     }
   }
 
+  public async registerRevocationRegistryDefinition(
+    agentContext: AgentContext,
+    options: RegisterRevocationRegistryDefinitionOptions
+  ): Promise<RegisterRevocationRegistryDefinitionReturn> {
+    return {
+      registrationMetadata: {},
+      revocationRegistryDefinitionMetadata: {},
+      revocationRegistryDefinitionState: {
+        state: "failed",
+        reason: "IndyVdrProxy does not support registration",
+      },
+    }
+  }
+
   public async getRevocationStatusList(
     agentContext: AgentContext,
     revocationRegistryId: string,
@@ -202,6 +220,20 @@ export class IndyVdrProxyAnonCredsRegistry implements AnonCredsRegistry {
         },
         revocationStatusListMetadata: {},
       }
+    }
+  }
+
+  public async registerRevocationStatusList(
+    agentContext: AgentContext,
+    options: RegisterRevocationStatusListOptions
+  ): Promise<RegisterRevocationStatusListReturn> {
+    return {
+      registrationMetadata: {},
+      revocationStatusListMetadata: {},
+      revocationStatusListState: {
+        state: "failed",
+        reason: "IndyVdrProxy does not support registration",
+      },
     }
   }
 }

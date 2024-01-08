@@ -6,8 +6,7 @@
   },
   "compilerOptions": {
     "baseUrl": ".",
-    "types": ["jest", "node"],
-    "watch": true
+    "types": ["jest", "node"]
   },
   "exclude": ["node_modules", "build"]
 }
