@@ -1,6 +1,6 @@
 {
   "name": "aries-framework-indy-vdr-proxy-client",
-  "version": "0.1.3",
+  "version": "0.1.4",
   "description": "Indy VDR Proxy client for aries-framework-javascript",
   "author": "2060.io",
   "homepage": "https://github.com/2060-io/aries-javascript-indy-vdr-proxy",
