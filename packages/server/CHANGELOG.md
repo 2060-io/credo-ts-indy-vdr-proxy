@@ -1,5 +1,12 @@
 # Changelog
 
+### [0.1.7](https://www.github.com/2060-io/aries-javascript-indy-vdr-proxy/compare/aries-framework-indy-vdr-proxy-server-v0.1.6...aries-framework-indy-vdr-proxy-server-v0.1.7) (2024-01-08)
+
+
+### Bug Fixes
+
+* update AFJ to 0.5.0 alpha and add missing methods ([4065622](https://www.github.com/2060-io/aries-javascript-indy-vdr-proxy/commit/406562253b6142f0b012dddc7fbe066f0b862413))
+
 ### [0.1.6](https://www.github.com/2060-io/aries-javascript-indy-vdr-proxy/compare/aries-framework-indy-vdr-proxy-server-v0.1.5...aries-framework-indy-vdr-proxy-server-v0.1.6) (2023-09-26)
 
 
