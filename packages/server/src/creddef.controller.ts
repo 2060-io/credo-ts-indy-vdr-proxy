@@ -1,6 +1,6 @@
 import { Controller, Get, Param } from "@nestjs/common"
 import { AgentService } from "./agent.service"
-import { GetCredentialDefinitionReturn } from "@aries-framework/anoncreds/build/services/registry"
+import { GetCredentialDefinitionReturn } from "@credo-ts/anoncreds/build/services/registry"
 
 @Controller("credential-definition")
 export class CredentialDefinitionController {

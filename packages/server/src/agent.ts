@@ -1,14 +1,8 @@
-import { Agent, ConsoleLogger, DidsModule, Logger, LogLevel } from "@aries-framework/core"
-import { agentDependencies } from "@aries-framework/node"
-import { AskarModule } from "@aries-framework/askar"
-import { AnonCredsModule } from "@aries-framework/anoncreds"
-import { AnonCredsRsModule } from "@aries-framework/anoncreds-rs"
-import {
-  IndyVdrAnonCredsRegistry,
-  IndyVdrModule,
-  IndyVdrPoolConfig,
-  IndyVdrSovDidResolver,
-} from "@aries-framework/indy-vdr"
+import { Agent, ConsoleLogger, DidsModule, Logger, LogLevel } from "@credo-ts/core"
+import { agentDependencies } from "@credo-ts/node"
+import { AskarModule } from "@credo-ts/askar"
+import { AnonCredsModule } from "@credo-ts/anoncreds"
+import { IndyVdrAnonCredsRegistry, IndyVdrModule, IndyVdrPoolConfig, IndyVdrSovDidResolver } from "@credo-ts/indy-vdr"
 import { anoncreds } from "@hyperledger/anoncreds-nodejs"
 import { ariesAskar } from "@hyperledger/aries-askar-nodejs"
 import { indyVdr } from "@hyperledger/indy-vdr-nodejs"
@@ -35,8 +29,8 @@ const getIndyVdrProxyAgentModules = (networks: [IndyVdrPoolConfig, ...IndyVdrPoo
     askar: new AskarModule({ ariesAskar }),
     anoncreds: new AnonCredsModule({
       registries: [new IndyVdrAnonCredsRegistry()],
+      anoncreds,
     }),
-    anoncredsRs: new AnonCredsRsModule({ anoncreds }),
     dids: new DidsModule({ resolvers: [new IndyVdrSovDidResolver()] }),
     indyVdr: new IndyVdrModule({
       indyVdr,

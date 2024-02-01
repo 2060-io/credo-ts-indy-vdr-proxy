@@ -1,7 +1,9 @@
-import type { DidResolutionResult, ParsedDid, DidResolver, AgentContext } from "@aries-framework/core"
+import type { DidResolutionResult, ParsedDid, DidResolver, AgentContext } from "@credo-ts/core"
 
 export class IndyVdrProxyDidResolver implements DidResolver {
   public readonly supportedMethods = ["sov", "indy"]
+
+  public readonly allowsCaching = true
 
   private proxyBaseUrl: string
 

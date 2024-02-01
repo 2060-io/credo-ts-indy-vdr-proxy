@@ -1,6 +1,6 @@
 import { Controller, Get, Param } from "@nestjs/common"
 import { AgentService } from "./agent.service"
-import { GetSchemaReturn } from "@aries-framework/anoncreds/build/services/registry"
+import { GetSchemaReturn } from "@credo-ts/anoncreds/build/services/registry"
 
 @Controller("schema")
 export class SchemaController {

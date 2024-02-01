@@ -11,7 +11,7 @@ on:
 # Ideally we only add this to the 'release' job so it doesn't limit PR runs, but github can't guarantee the job order in that case:
 # "When concurrency is specified at the job level, order is not guaranteed for jobs or runs that queue within 5 minutes of each other."
 concurrency:
-  group: aries-framework-${{ github.ref }}-${{ github.repository }}-${{ github.event_name }}
+  group: credo-ts-${{ github.ref }}-${{ github.repository }}-${{ github.event_name }}
   cancel-in-progress: true
 
 jobs:
@@ -38,7 +38,7 @@ jobs:
     needs: [ci-trigger]
     if: needs.ci-trigger.outputs.triggered == 'true'
     steps:
-      - name: Checkout aries-javascript-indy-vdr-proxy
+      - name: Checkout credo-ts-indy-vdr-proxy
         uses: actions/checkout@v2
 
       - name: Setup NodeJS
@@ -60,12 +60,12 @@ jobs:
 
   package-finder:
     runs-on: ubuntu-latest
-    if: github.ref == 'refs/heads/main' && github.repository == '2060-io/aries-javascript-indy-vdr-proxy' && github.event_name == 'push'
+    if: github.ref == 'refs/heads/main' && github.repository == '2060-io/credo-ts-indy-vdr-proxy' && github.event_name == 'push'
     needs: [validate]
     outputs:
       packages: ${{ steps.get-packages.outputs.packages }}
     steps:
-      - name: Checkout aries-javascript-indy-vdr-proxy
+      - name: Checkout credo-ts-indy-vdr-proxy
         uses: actions/checkout@v2
 
       - name: Setup NodeJS
@@ -101,7 +101,7 @@ jobs:
           signoff: "github-actions[bot] <41898282+github-actions[bot]@users.noreply.github.com>"
 
       # Initiate release process if release was created
-      - name: Checkout aries-javascript-indy-vdr-proxy
+      - name: Checkout credo-ts-indy-vdr-proxy
         uses: actions/checkout@v2
         if: ${{ steps.release-please.outputs.release_created }}
       - name: Setup NodeJS

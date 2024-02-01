@@ -1,9 +1,9 @@
 {
-  "name": "aries-framework-indy-vdr-proxy-server",
+  "name": "credo-ts-indy-vdr-proxy-server",
   "version": "0.1.7",
-  "description": "Indy VDR Proxy server based on aries-framework-javascript",
+  "description": "Indy VDR Proxy server based on credo-ts",
   "author": "2060.io",
-  "homepage": "https://github.com/2060-io/aries-javascript-indy-vdr-proxy",
+  "homepage": "https://github.com/2060-io/credo-ts-indy-vdr-proxy",
   "license": "ISC",
   "main": "build/index.js",
   "types": "build/index.js",
@@ -22,24 +22,25 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/2060-io/aries-javascript-indy-vdr-proxy",
+    "url": "https://github.com/2060-io/credo-ts-indy-vdr-proxy",
     "directory": "packages/server"
   },
   "bugs": {
-    "url": "https://github.com/2060-io/aries-javascript-indy-vdr-proxy/issues"
+    "url": "https://github.com/2060-io/credo-ts-indy-vdr-proxy/issues"
   },
   "publishConfig": {
     "access": "public"
   },
   "dependencies": {
-    "@aries-framework/anoncreds-rs": "^0.5.0-alpha.71",
-    "@aries-framework/askar": "^0.5.0-alpha.71",
-    "@aries-framework/core": "^0.5.0-alpha.71",
-    "@aries-framework/indy-vdr": "^0.5.0-alpha.71",
-    "@aries-framework/node": "^0.5.0-alpha.71",
-    "@hyperledger/anoncreds-nodejs": "^0.2.0-dev.4",
-    "@hyperledger/aries-askar-nodejs": "^0.2.0-dev.1",
-    "@hyperledger/indy-vdr-nodejs": "^0.1.0",
+    "@credo-ts/anoncreds": "^0.5.0-alpha.116",
+    "@credo-ts/askar": "^0.5.0-alpha.116",
+    "@credo-ts/core": "^0.5.0-alpha.116",
+    "@credo-ts/indy-vdr": "^0.5.0-alpha.116",
+    "@credo-ts/node": "^0.5.0-alpha.116",
+    "@hyperledger/anoncreds-shared": "^0.2.0-dev.9",
+    "@hyperledger/anoncreds-nodejs": "^0.2.0-dev.9",
+    "@hyperledger/aries-askar-nodejs": "^0.2.0-dev.6",
+    "@hyperledger/indy-vdr-nodejs": "^0.2.0-dev.6",
     "@nestjs/common": "^9.0.0",
     "@nestjs/core": "^9.0.0",
     "@nestjs/platform-express": "^9.0.0",

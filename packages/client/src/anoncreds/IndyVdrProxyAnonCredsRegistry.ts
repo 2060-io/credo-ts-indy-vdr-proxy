@@ -8,14 +8,18 @@ import type {
   RegisterCredentialDefinitionReturn,
   GetRevocationStatusListReturn,
   GetRevocationRegistryDefinitionReturn,
-  RegisterRevocationRegistryDefinitionOptions,
   RegisterRevocationRegistryDefinitionReturn,
-  RegisterRevocationStatusListOptions,
   RegisterRevocationStatusListReturn,
-} from "@aries-framework/anoncreds"
-import type { AgentContext } from "@aries-framework/core"
+} from "@credo-ts/anoncreds"
+
+import { CacheModuleConfig, type AgentContext } from "@credo-ts/core"
 
 import { indyVdrAnonCredsRegistryIdentifierRegex } from "./identifiers"
+
+export interface CacheSettings {
+  allowCaching: boolean
+  cacheDurationInSeconds: number
+}
 
 export class IndyVdrProxyAnonCredsRegistry implements AnonCredsRegistry {
   public readonly methodName = "indy"
@@ -24,11 +28,36 @@ export class IndyVdrProxyAnonCredsRegistry implements AnonCredsRegistry {
 
   private proxyBaseUrl: string
 
-  public constructor(proxyBaseUrl: string) {
+  private cacheSettings: CacheSettings
+
+  public constructor(options: { proxyBaseUrl: string; cacheOptions?: CacheSettings }) {
+    const { proxyBaseUrl, cacheOptions } = options
     this.proxyBaseUrl = proxyBaseUrl
+
+    this.cacheSettings = cacheOptions ?? { allowCaching: true, cacheDurationInSeconds: 300 }
   }
 
   public async getSchema(agentContext: AgentContext, schemaId: string): Promise<GetSchemaReturn> {
+    const cacheKey = `anoncreds:schema:${schemaId}`
+
+    if (this.cacheSettings.allowCaching) {
+      const cache = agentContext.dependencyManager.resolve(CacheModuleConfig).cache
+
+      const cachedObject = await cache.get<GetSchemaReturn>(agentContext, cacheKey)
+
+      if (cachedObject) {
+        return {
+          schema: cachedObject.schema,
+          schemaId,
+          schemaMetadata: cachedObject.schemaMetadata,
+          resolutionMetadata: {
+            ...cachedObject.resolutionMetadata,
+            servedFromCache: true,
+          },
+        }
+      }
+    }
+
     try {
       const response = await agentContext.config.agentDependencies.fetch(
         `${this.proxyBaseUrl}/schema/${encodeURIComponent(schemaId)}`
@@ -43,8 +72,22 @@ export class IndyVdrProxyAnonCredsRegistry implements AnonCredsRegistry {
           schemaMetadata: {},
         }
       }
+      const result = (await response.json()) as GetSchemaReturn
+      if (result.schema && this.cacheSettings.allowCaching) {
+        const cache = agentContext.dependencyManager.resolve(CacheModuleConfig).cache
+        await cache.set(
+          agentContext,
+          cacheKey,
+          {
+            resolutionMetadata: result.resolutionMetadata,
+            schema: result.schema,
+            schemaMetadata: result.schemaMetadata,
+          },
+          this.cacheSettings.cacheDurationInSeconds
+        )
+      }
 
-      return (await response.json()) as GetSchemaReturn
+      return result
     } catch (error) {
       agentContext.config.logger.error(`Error retrieving schema '${schemaId}'`, {
         error,
@@ -80,6 +123,26 @@ export class IndyVdrProxyAnonCredsRegistry implements AnonCredsRegistry {
     agentContext: AgentContext,
     credentialDefinitionId: string
   ): Promise<GetCredentialDefinitionReturn> {
+    const cacheKey = `anoncreds:credentialDefinition:${credentialDefinitionId}`
+
+    if (this.cacheSettings.allowCaching) {
+      const cache = agentContext.dependencyManager.resolve(CacheModuleConfig).cache
+
+      const cachedObject = await cache.get<GetCredentialDefinitionReturn>(agentContext, cacheKey)
+
+      if (cachedObject) {
+        return {
+          credentialDefinition: cachedObject.credentialDefinition,
+          credentialDefinitionId,
+          credentialDefinitionMetadata: cachedObject.credentialDefinitionMetadata,
+          resolutionMetadata: {
+            ...cachedObject.resolutionMetadata,
+            servedFromCache: true,
+          },
+        }
+      }
+    }
+
     try {
       const response = await agentContext.config.agentDependencies.fetch(
         `${this.proxyBaseUrl}/credential-definition/${encodeURIComponent(credentialDefinitionId)}`
@@ -95,7 +158,23 @@ export class IndyVdrProxyAnonCredsRegistry implements AnonCredsRegistry {
           credentialDefinitionMetadata: {},
         }
       }
-      return (await response.json()) as GetCredentialDefinitionReturn
+      const result = (await response.json()) as GetCredentialDefinitionReturn
+
+      if (result.credentialDefinition && this.cacheSettings.allowCaching) {
+        const cache = agentContext.dependencyManager.resolve(CacheModuleConfig).cache
+        await cache.set(
+          agentContext,
+          cacheKey,
+          {
+            resolutionMetadata: result.resolutionMetadata,
+            schema: result.credentialDefinition,
+            schemaMetadata: result.credentialDefinitionMetadata,
+          },
+          this.cacheSettings.cacheDurationInSeconds
+        )
+      }
+
+      return result
     } catch (error) {
       agentContext.config.logger.error(`Error retrieving credential definition '${credentialDefinitionId}'`, {
         error,
@@ -132,6 +211,26 @@ export class IndyVdrProxyAnonCredsRegistry implements AnonCredsRegistry {
     agentContext: AgentContext,
     revocationRegistryDefinitionId: string
   ): Promise<GetRevocationRegistryDefinitionReturn> {
+    const cacheKey = `anoncreds:revocationRegistryDefinition:${revocationRegistryDefinitionId}`
+
+    if (this.cacheSettings.allowCaching) {
+      const cache = agentContext.dependencyManager.resolve(CacheModuleConfig).cache
+
+      const cachedObject = await cache.get<GetRevocationRegistryDefinitionReturn>(agentContext, cacheKey)
+
+      if (cachedObject) {
+        return {
+          revocationRegistryDefinition: cachedObject.revocationRegistryDefinition,
+          revocationRegistryDefinitionId,
+          revocationRegistryDefinitionMetadata: cachedObject.revocationRegistryDefinitionMetadata,
+          resolutionMetadata: {
+            ...cachedObject.resolutionMetadata,
+            servedFromCache: true,
+          },
+        }
+      }
+    }
+
     try {
       const response = await agentContext.config.agentDependencies.fetch(
         `${this.proxyBaseUrl}/revocation-registry-definition/${encodeURIComponent(revocationRegistryDefinitionId)}`
@@ -147,7 +246,23 @@ export class IndyVdrProxyAnonCredsRegistry implements AnonCredsRegistry {
         }
       }
 
-      return (await response.json()) as GetRevocationRegistryDefinitionReturn
+      const result = (await response.json()) as GetRevocationRegistryDefinitionReturn
+
+      if (result.revocationRegistryDefinition && this.cacheSettings.allowCaching) {
+        const cache = agentContext.dependencyManager.resolve(CacheModuleConfig).cache
+        await cache.set(
+          agentContext,
+          cacheKey,
+          {
+            resolutionMetadata: result.resolutionMetadata,
+            revocationRegistryDefinition: result.revocationRegistryDefinition,
+            revocationRegistryDefinitionMetadata: result.revocationRegistryDefinitionMetadata,
+          },
+          this.cacheSettings.cacheDurationInSeconds
+        )
+      }
+
+      return result
     } catch (error) {
       agentContext.config.logger.error(
         `Error retrieving revocation registry definition '${revocationRegistryDefinitionId}' from ledger`,
@@ -168,10 +283,7 @@ export class IndyVdrProxyAnonCredsRegistry implements AnonCredsRegistry {
     }
   }
 
-  public async registerRevocationRegistryDefinition(
-    agentContext: AgentContext,
-    options: RegisterRevocationRegistryDefinitionOptions
-  ): Promise<RegisterRevocationRegistryDefinitionReturn> {
+  public async registerRevocationRegistryDefinition(): Promise<RegisterRevocationRegistryDefinitionReturn> {
     return {
       registrationMetadata: {},
       revocationRegistryDefinitionMetadata: {},
@@ -223,10 +335,7 @@ export class IndyVdrProxyAnonCredsRegistry implements AnonCredsRegistry {
     }
   }
 
-  public async registerRevocationStatusList(
-    agentContext: AgentContext,
-    options: RegisterRevocationStatusListOptions
-  ): Promise<RegisterRevocationStatusListReturn> {
+  public async registerRevocationStatusList(): Promise<RegisterRevocationStatusListReturn> {
     return {
       registrationMetadata: {},
       revocationStatusListMetadata: {},
