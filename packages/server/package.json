@@ -1,6 +1,6 @@
 {
   "name": "credo-ts-indy-vdr-proxy-server",
-  "version": "0.1.6",
+  "version": "0.1.7",
   "description": "Indy VDR Proxy server based on credo-ts",
   "author": "2060.io",
   "homepage": "https://github.com/2060-io/credo-ts-indy-vdr-proxy",
