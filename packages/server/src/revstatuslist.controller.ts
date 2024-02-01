@@ -1,6 +1,6 @@
 import { Controller, Get, Param } from "@nestjs/common"
 import { AgentService } from "./agent.service"
-import { GetRevocationStatusListReturn } from "@aries-framework/anoncreds/build/services/registry"
+import { GetRevocationStatusListReturn } from "@credo-ts/anoncreds/build/services/registry"
 
 @Controller("revocation-status-list")
 export class RevocationStatusListController {

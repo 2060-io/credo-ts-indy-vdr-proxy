@@ -1,4 +1,4 @@
-import { DidResolutionResult } from "@aries-framework/core"
+import { DidResolutionResult } from "@credo-ts/core"
 import { Controller, Get, Param } from "@nestjs/common"
 import { AgentService } from "./agent.service"
 

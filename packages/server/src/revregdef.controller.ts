@@ -1,6 +1,6 @@
 import { Controller, Get, Param } from "@nestjs/common"
 import { AgentService } from "./agent.service"
-import { GetRevocationRegistryDefinitionReturn } from "@aries-framework/anoncreds/build/services/registry"
+import { GetRevocationRegistryDefinitionReturn } from "@credo-ts/anoncreds/build/services/registry"
 
 @Controller("revocation-registry-definition")
 export class RevocationRegistryDefinitionController {

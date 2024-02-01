@@ -1,11 +1,11 @@
-import { IndyVdrPoolConfig } from "@aries-framework/indy-vdr"
+import { IndyVdrPoolConfig } from "@credo-ts/indy-vdr"
 import { NestFactory } from "@nestjs/core"
 import { setupAgent } from "./agent"
 import { IndyVdrProxyModule } from "./app.module"
 
 import { readFileSync } from "fs"
 import { Logger } from "@nestjs/common"
-import { ConsoleLogger } from "@aries-framework/core"
+import { ConsoleLogger } from "@credo-ts/core"
 
 async function bootstrap() {
   const configPath = process.env.INDY_VDR_PROXY_CONFIG_PATH ?? "./res/app.config.json"
