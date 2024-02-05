@@ -167,8 +167,8 @@ export class IndyVdrProxyAnonCredsRegistry implements AnonCredsRegistry {
           cacheKey,
           {
             resolutionMetadata: result.resolutionMetadata,
-            schema: result.credentialDefinition,
-            schemaMetadata: result.credentialDefinitionMetadata,
+            credentialDefinition: result.credentialDefinition,
+            credentialDefinitionMetadata: result.credentialDefinitionMetadata,
           },
           this.cacheSettings.cacheDurationInSeconds
         )
