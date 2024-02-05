@@ -1,5 +1,12 @@
 # Changelog
 
+### [0.1.1](https://www.github.com/2060-io/credo-ts-indy-vdr-proxy/compare/credo-ts-indy-vdr-proxy-client-v0.1.0...credo-ts-indy-vdr-proxy-client-v0.1.1) (2024-02-05)
+
+
+### Bug Fixes
+
+* caching credential definitions ([d1d8908](https://www.github.com/2060-io/credo-ts-indy-vdr-proxy/commit/d1d8908d95f0cda48218c3c4062be469ba1699b8))
+
 ## 0.1.0 (2024-02-01)
 
 
