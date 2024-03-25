@@ -17,6 +17,8 @@ export function setupAgent(options: { networks: [IndyVdrPoolConfig, ...IndyVdrPo
         id: "indy-vdr-proxy",
         key: "indy-vdr-proxy",
       },
+      autoUpdateStorageOnStartup: true,
+      backupBeforeStorageUpdate: false,
       logger: options.logger ?? new ConsoleLogger(LogLevel.off),
     },
     dependencies: agentDependencies,
