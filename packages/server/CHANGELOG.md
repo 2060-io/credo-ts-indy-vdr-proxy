@@ -1,5 +1,12 @@
 # Changelog
 
+### [0.1.1](https://www.github.com/2060-io/credo-ts-indy-vdr-proxy/compare/credo-ts-indy-vdr-proxy-server-v0.1.0...credo-ts-indy-vdr-proxy-server-v0.1.1) (2024-03-25)
+
+
+### Bug Fixes
+
+* **server:** autoupdate agent storage ([128e096](https://www.github.com/2060-io/credo-ts-indy-vdr-proxy/commit/128e096fa9cff5bf7385277319788afbbed2eb18))
+
 ## 0.1.0 (2024-02-01)
 
 
