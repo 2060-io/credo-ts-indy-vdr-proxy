@@ -1,4 +1,4 @@
-# Aries JavaScript Indy VDR Proxy Server
+# Credo Indy VDR Proxy Server
 
 A server that exposes a REST API to resolve objects in Indy networks. It is built in [NestJs](https://github.com/nestjs/nest) and based on [Credo](https://github.com/openwallet-foundation/credo-ts).
 
@@ -39,9 +39,9 @@ All endpoints use HTTP GET method.
 
 - /did/{fully qualified or legacy Indy did}: resolve a DID Document
 - /schema/{fully qualified AnonCreds schema ID}: resolve an AnonCreds Schema
-- /credential-definition/{fully qualified AnonCreds credential definition ID}: resolve an AnonCreds Credential Definition
-- /revocation-registry-definition/{fully qualified AnonCreds revocation registry definition ID}: resolve an AnonCreds Revocation Registry Definition
-- /revocation-status-list/{fully qualified AnonCreds revocation registry definition ID}/{timestamp}: resolve an AnonCreds Revocation Status List
+- /credential-definition/{fully qualified or legacy AnonCreds credential definition ID}: resolve an AnonCreds Credential Definition
+- /revocation-registry-definition/{fully qualified or legacy AnonCreds revocation registry definition ID}: resolve an AnonCreds Revocation Registry Definition
+- /revocation-status-list/{fully qualified or legacy AnonCreds revocation registry definition ID}/{timestamp}: resolve an AnonCreds Revocation Status List
 
 The response for each follows the format used in `@credo-ts/anoncreds` module. It's a JSON containing three elements:
 

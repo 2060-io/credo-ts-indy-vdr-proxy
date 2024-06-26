@@ -1,4 +1,4 @@
-# Aries JavaScript Indy VDR Proxy client
+# Credo Indy VDR Proxy client
 
 This package provides some convenient classes to allow an Agent built on [Credo](https://github.com/openwallet-foundation/credo-ts) resolve DIDs and AnonCreds objects from a number of Indy networks without the need of embedding any [indy-vdr](https://github.com/hyperledger/indy-vdr) client binary.
 
