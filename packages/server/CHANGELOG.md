@@ -1,5 +1,12 @@
 # Changelog
 
+### [0.1.3](https://www.github.com/2060-io/credo-ts-indy-vdr-proxy/compare/credo-ts-indy-vdr-proxy-server-v0.1.2...credo-ts-indy-vdr-proxy-server-v0.1.3) (2024-06-27)
+
+
+### Features
+
+* update to credo-ts 0.5.6 ([#24](https://www.github.com/2060-io/credo-ts-indy-vdr-proxy/issues/24)) ([fb6ea82](https://www.github.com/2060-io/credo-ts-indy-vdr-proxy/commit/fb6ea8226a52792902bcfa6f5fda66ca5a9a41a9))
+
 ### [0.1.2](https://www.github.com/2060-io/credo-ts-indy-vdr-proxy/compare/credo-ts-indy-vdr-proxy-server-v0.1.1...credo-ts-indy-vdr-proxy-server-v0.1.2) (2024-06-26)
 
 
