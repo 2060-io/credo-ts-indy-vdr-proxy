@@ -25,7 +25,7 @@ By default, Indy VDR Proxy Server runs at port 3000 and supports only [BCovrin T
 INDY_VDR_PROXY_CONFIG_PATH=/my-directory/my-config.file.json yarn run start
 ```
 
-If you want to integrate Indy VDR Proxy in your own NestJS-based project, you can by importing `IndyVdrProxyServerModule`. You'll need to call `register` method passing an `IndyVdrProxyAgent` instance (which could be your own AFJ-based Agent as long as it contains all required modules):
+If you want to integrate Indy VDR Proxy in your own NestJS-based project, you can by importing `IndyVdrProxyServerModule`. You'll need to call `register` method passing an `IndyVdrProxyAgent` instance (which could be your own Credo-based Agent as long as it contains all required modules):
 
 ```ts
 import { setupAgent } from "credo-ts-indy-vdr-proxy-server"

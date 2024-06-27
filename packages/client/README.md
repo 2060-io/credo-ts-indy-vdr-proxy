@@ -22,13 +22,14 @@ const agent = new Agent({
   dependencies,
   modules: {
     /* ... */
-    anoncreds: new AnonCredsModule({ registries: [ /* ... */ new IndyVdrProxyAnonCredsRegistry(proxyBaseUrl)] }),
+    anoncreds: new AnonCredsModule({ registries: [ /* ... */ new IndyVdrProxyAnonCredsRegistry({ proxyBaseUrl })] }),
     dids: new DidsModule({
       resolvers: [
         /* ... */
         new IndyVdrProxyDidResolver(proxyBaseUrl),
       ],
      },
+  },
 })
 ```
 
