@@ -1,0 +1,13 @@
+version: "3.7"
+services:
+  indy-vdr-proxy-server:
+    build: .
+    image: indy-vdr-proxy-server:test
+    container_name: indy-vdr-proxy-server
+    environment:
+      - INDY_VDR_PROXY_CONFIG_PATH=/data/app.config.json
+    restart: always
+    ports:
+      - 3000:3000
+    volumes:
+      - ./res/app.config.json:/data/app.config.json
