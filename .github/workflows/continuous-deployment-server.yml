@@ -72,7 +72,7 @@ jobs:
         if: steps.semantic.outputs.new-release-published == 'true'
         run: |
           cd packages/server
-          docker build -f Dockerfile -t $DH_USERNAME/$IMAGE_NAME:${GITHUB_REF##*/} .
+          docker build -f Dockerfile -t $DH_USERNAME/$IMAGE_NAME:dev .
 
       - name: Add tags to Docker image and push to Docker Hub
         if: steps.semantic.outputs.new-release-published == 'true'
