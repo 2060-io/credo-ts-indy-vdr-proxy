@@ -1,0 +1,43 @@
+name: Continuous Deployment indy-vdr-proxy-server
+
+on:
+  push:
+    branches: [main]
+
+  workflow_dispatch:
+
+env:
+  DH_USERNAME: ${{ secrets.DOCKER_HUB_LOGIN }}
+  DH_TOKEN: ${{ secrets.DOCKER_HUB_PWD }}
+  IMAGE_NAME: "indy-vdr-proxy"
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup node v18
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
+
+      - name: Install dependencies
+        run: |
+          cd packages/server
+          yarn install
+
+      - name: Log in to Docker Hub
+        run: |
+          echo "$DH_TOKEN" | docker login -u "$DH_USERNAME" --password-stdin
+
+      - name: Build Docker image
+        run: |
+          cd packages/server
+          docker build -f Dockerfile -t $DH_USERNAME/$IMAGE_NAME:dev .
+
+      - name: Push Docker image
+        run: |
+          docker push $DH_USERNAME/$IMAGE_NAME:dev
