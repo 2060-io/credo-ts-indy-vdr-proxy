@@ -1,5 +1,6 @@
 import { parseDid } from "@credo-ts/core"
 import nock, { cleanAll, enableNetConnect } from "nock"
+
 import { IndyVdrProxyDidResolver } from "../src/dids"
 
 import didDocument1 from "./__fixtures__/did1.json"
