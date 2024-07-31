@@ -1,3 +1,4 @@
+import type { Headers } from "../types"
 import type { DidResolutionResult, ParsedDid, DidResolver, AgentContext } from "@credo-ts/core"
 
 export class IndyVdrProxyDidResolver implements DidResolver {
@@ -6,17 +7,32 @@ export class IndyVdrProxyDidResolver implements DidResolver {
   public readonly allowsCaching = true
 
   private proxyBaseUrl: string
+  private _headers?: Headers
 
-  public constructor(proxyBaseUrl: string) {
-    this.proxyBaseUrl = proxyBaseUrl
+  private get headers(): Record<string, string> | undefined {
+    if (typeof this._headers === "function") {
+      return this._headers()
+    }
+
+    return this._headers
   }
 
+  public constructor(options: { proxyBaseUrl: string; headers?: Headers }) {
+    this.proxyBaseUrl = options.proxyBaseUrl
+    this._headers = options.headers
+  }
+
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   public async resolve(agentContext: AgentContext, did: string, _parsed: ParsedDid): Promise<DidResolutionResult> {
     const didDocumentMetadata = {}
 
     try {
       const response = await agentContext.config.agentDependencies.fetch(
-        `${this.proxyBaseUrl}/did/${encodeURIComponent(did)}`
+        `${this.proxyBaseUrl}/did/${encodeURIComponent(did)}`,
+        {
+          method: "GET",
+          headers: this.headers,
+        }
       )
       if (!response.ok) {
         return {
