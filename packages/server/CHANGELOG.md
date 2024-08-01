@@ -1,5 +1,17 @@
 # Changelog
 
+## [0.2.0](https://www.github.com/2060-io/credo-ts-indy-vdr-proxy/compare/credo-ts-indy-vdr-proxy-server-v0.1.3...credo-ts-indy-vdr-proxy-server-v0.2.0) (2024-08-01)
+
+
+### ⚠ BREAKING CHANGES
+
+* **client:** allow to set request headers (#30)
+
+### Features
+
+* **client:** allow to set request headers ([#30](https://www.github.com/2060-io/credo-ts-indy-vdr-proxy/issues/30)) ([49c00a0](https://www.github.com/2060-io/credo-ts-indy-vdr-proxy/commit/49c00a035285f9c9a596fbe6db500c8e547ffc9b))
+* Create a basic server Docker image ([#28](https://www.github.com/2060-io/credo-ts-indy-vdr-proxy/issues/28)) ([c7a1163](https://www.github.com/2060-io/credo-ts-indy-vdr-proxy/commit/c7a1163134fb5a46da33c952622b3c18194d817c))
+
 ### [0.1.3](https://www.github.com/2060-io/credo-ts-indy-vdr-proxy/compare/credo-ts-indy-vdr-proxy-server-v0.1.2...credo-ts-indy-vdr-proxy-server-v0.1.3) (2024-06-27)
 
 
