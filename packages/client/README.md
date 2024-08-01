@@ -39,7 +39,9 @@ Keep in mind that these implementation collide with other resolvers and registri
 
 ## Configuration
 
-In the constructor, you can configure basic parameters to access your Indy VDR Proxy server:
+In the constructor for both the AnonCreds Registry and DID Resolver, you can configure basic parameters to access your Indy VDR Proxy server:
 
 - `proxyBaseUrl`: base URL for your proxy
 - `headers`: optional object or callback containing request headers your proxy might need (e.g. authorization tokens)
+
+In addition, `IndyVdrProxyAnonCredsRegistry` adds a `cacheOptions` object that allows to set up object caching. By default, AnonCreds objects are cached with a validity of 5 minutes. This is mostly useful to reduce the number of calls to the proxy in a single flow that might need to retrieve the same object multiple times.
