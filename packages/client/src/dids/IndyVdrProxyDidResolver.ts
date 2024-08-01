@@ -9,9 +9,9 @@ export class IndyVdrProxyDidResolver implements DidResolver {
   private proxyBaseUrl: string
   private _headers?: Headers
 
-  private get headers(): Record<string, string> | undefined {
+  private async getHeaders(): Promise<Record<string, string> | undefined> {
     if (typeof this._headers === "function") {
-      return this._headers()
+      return await Promise.resolve(this._headers())
     }
 
     return this._headers
@@ -31,7 +31,7 @@ export class IndyVdrProxyDidResolver implements DidResolver {
         `${this.proxyBaseUrl}/did/${encodeURIComponent(did)}`,
         {
           method: "GET",
-          headers: this.headers,
+          headers: await this.getHeaders(),
         }
       )
       if (!response.ok) {
