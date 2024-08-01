@@ -39,9 +39,9 @@ export class IndyVdrProxyAnonCredsRegistry implements AnonCredsRegistry {
 
   private _headers?: Headers
 
-  private get headers(): Record<string, string> | undefined {
+  private async getHeaders(): Promise<Record<string, string> | undefined> {
     if (typeof this._headers === "function") {
-      return this._headers()
+      return await this._headers()
     }
 
     return this._headers
@@ -81,7 +81,7 @@ export class IndyVdrProxyAnonCredsRegistry implements AnonCredsRegistry {
         `${this.proxyBaseUrl}/schema/${encodeURIComponent(schemaId)}`,
         {
           method: "GET",
-          headers: this.headers,
+          headers: await this.getHeaders(),
         }
       )
       if (!response.ok) {
@@ -170,7 +170,7 @@ export class IndyVdrProxyAnonCredsRegistry implements AnonCredsRegistry {
         `${this.proxyBaseUrl}/credential-definition/${encodeURIComponent(credentialDefinitionId)}`,
         {
           method: "GET",
-          headers: this.headers,
+          headers: await this.getHeaders(),
         }
       )
 
@@ -262,7 +262,7 @@ export class IndyVdrProxyAnonCredsRegistry implements AnonCredsRegistry {
         `${this.proxyBaseUrl}/revocation-registry-definition/${encodeURIComponent(revocationRegistryDefinitionId)}`,
         {
           method: "GET",
-          headers: this.headers,
+          headers: await this.getHeaders(),
         }
       )
       if (!response.ok) {
@@ -334,7 +334,7 @@ export class IndyVdrProxyAnonCredsRegistry implements AnonCredsRegistry {
         `${this.proxyBaseUrl}/revocation-status-list/${encodeURIComponent(revocationRegistryId)}/${timestamp}`,
         {
           method: "GET",
-          headers: this.headers,
+          headers: await this.getHeaders(),
         }
       )
       if (!response.ok) {

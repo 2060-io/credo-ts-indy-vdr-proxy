@@ -1,5 +1,12 @@
 # Changelog
 
+### [0.2.1](https://www.github.com/2060-io/credo-ts-indy-vdr-proxy/compare/credo-ts-indy-vdr-proxy-client-v0.2.0...credo-ts-indy-vdr-proxy-client-v0.2.1) (2024-08-01)
+
+
+### Features
+
+* doc cache options ([#33](https://www.github.com/2060-io/credo-ts-indy-vdr-proxy/issues/33)) ([ae12183](https://www.github.com/2060-io/credo-ts-indy-vdr-proxy/commit/ae12183e086f05822b146046281240628ac6947e))
+
 ## [0.2.0](https://www.github.com/2060-io/credo-ts-indy-vdr-proxy/compare/credo-ts-indy-vdr-proxy-client-v0.1.3...credo-ts-indy-vdr-proxy-client-v0.2.0) (2024-08-01)
 
 
