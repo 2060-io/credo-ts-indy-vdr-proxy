@@ -22,6 +22,12 @@ export interface CacheSettings {
   cacheDurationInSeconds: number
 }
 
+export interface IndyVdrProxyAnonCredsRegistryConfig {
+  proxyBaseUrl: string
+  cacheOptions?: CacheSettings
+  headers?: Headers
+}
+
 export class IndyVdrProxyAnonCredsRegistry implements AnonCredsRegistry {
   public readonly methodName = "indy"
 
@@ -41,7 +47,7 @@ export class IndyVdrProxyAnonCredsRegistry implements AnonCredsRegistry {
     return this._headers
   }
 
-  public constructor(options: { proxyBaseUrl: string; cacheOptions?: CacheSettings; headers?: Headers }) {
+  public constructor(options: IndyVdrProxyAnonCredsRegistryConfig) {
     const { proxyBaseUrl, cacheOptions, headers } = options
     this.proxyBaseUrl = proxyBaseUrl
     this._headers = headers
