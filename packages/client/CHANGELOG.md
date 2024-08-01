@@ -1,5 +1,12 @@
 # Changelog
 
+### [0.2.2](https://www.github.com/2060-io/credo-ts-indy-vdr-proxy/compare/credo-ts-indy-vdr-proxy-client-v0.2.1...credo-ts-indy-vdr-proxy-client-v0.2.2) (2024-08-01)
+
+
+### Features
+
+* **client:** async headers callback ([#35](https://www.github.com/2060-io/credo-ts-indy-vdr-proxy/issues/35)) ([46e8141](https://www.github.com/2060-io/credo-ts-indy-vdr-proxy/commit/46e814141dbc155227f4c70e080af85887546e0d))
+
 ### [0.2.1](https://www.github.com/2060-io/credo-ts-indy-vdr-proxy/compare/credo-ts-indy-vdr-proxy-client-v0.2.0...credo-ts-indy-vdr-proxy-client-v0.2.1) (2024-08-01)
 
 
