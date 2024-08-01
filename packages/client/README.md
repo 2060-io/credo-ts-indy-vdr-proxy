@@ -22,11 +22,11 @@ const agent = new Agent({
   dependencies,
   modules: {
     /* ... */
-    anoncreds: new AnonCredsModule({ registries: [ /* ... */ new IndyVdrProxyAnonCredsRegistry({ proxyBaseUrl })] }),
+    anoncreds: new AnonCredsModule({ registries: [ /* ... */ new IndyVdrProxyAnonCredsRegistry({ proxyBaseUrl, headers })] }),
     dids: new DidsModule({
       resolvers: [
         /* ... */
-        new IndyVdrProxyDidResolver(proxyBaseUrl),
+        new IndyVdrProxyDidResolver( { proxyBaseUrl, headers }),
       ],
      },
   },
@@ -36,3 +36,10 @@ const agent = new Agent({
 And that's it!
 
 Keep in mind that these implementation collide with other resolvers and registries for Indy networks, such as the ones from `@credo-ts/indy-vdr` package, so you'll need to choose to use one or the another when setting up an Agent.
+
+## Configuration
+
+In the constructor, you can configure basic parameters to access your Indy VDR Proxy server:
+
+- `proxyBaseUrl`: base URL for your proxy
+- `headers`: optional object or callback containing request headers your proxy might need (e.g. authorization tokens)

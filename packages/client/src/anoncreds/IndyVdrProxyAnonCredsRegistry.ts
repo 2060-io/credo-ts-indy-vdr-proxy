@@ -1,3 +1,4 @@
+import type { Headers } from "../types"
 import type {
   AnonCredsRegistry,
   GetCredentialDefinitionReturn,
@@ -30,9 +31,20 @@ export class IndyVdrProxyAnonCredsRegistry implements AnonCredsRegistry {
 
   private cacheSettings: CacheSettings
 
-  public constructor(options: { proxyBaseUrl: string; cacheOptions?: CacheSettings }) {
-    const { proxyBaseUrl, cacheOptions } = options
+  private _headers?: Headers
+
+  private get headers(): Record<string, string> | undefined {
+    if (typeof this._headers === "function") {
+      return this._headers()
+    }
+
+    return this._headers
+  }
+
+  public constructor(options: { proxyBaseUrl: string; cacheOptions?: CacheSettings; headers?: Headers }) {
+    const { proxyBaseUrl, cacheOptions, headers } = options
     this.proxyBaseUrl = proxyBaseUrl
+    this._headers = headers
 
     this.cacheSettings = cacheOptions ?? { allowCaching: true, cacheDurationInSeconds: 300 }
   }
@@ -60,7 +72,11 @@ export class IndyVdrProxyAnonCredsRegistry implements AnonCredsRegistry {
 
     try {
       const response = await agentContext.config.agentDependencies.fetch(
-        `${this.proxyBaseUrl}/schema/${encodeURIComponent(schemaId)}`
+        `${this.proxyBaseUrl}/schema/${encodeURIComponent(schemaId)}`,
+        {
+          method: "GET",
+          headers: this.headers,
+        }
       )
       if (!response.ok) {
         return {
@@ -145,7 +161,11 @@ export class IndyVdrProxyAnonCredsRegistry implements AnonCredsRegistry {
 
     try {
       const response = await agentContext.config.agentDependencies.fetch(
-        `${this.proxyBaseUrl}/credential-definition/${encodeURIComponent(credentialDefinitionId)}`
+        `${this.proxyBaseUrl}/credential-definition/${encodeURIComponent(credentialDefinitionId)}`,
+        {
+          method: "GET",
+          headers: this.headers,
+        }
       )
 
       if (!response.ok) {
@@ -233,7 +253,11 @@ export class IndyVdrProxyAnonCredsRegistry implements AnonCredsRegistry {
 
     try {
       const response = await agentContext.config.agentDependencies.fetch(
-        `${this.proxyBaseUrl}/revocation-registry-definition/${encodeURIComponent(revocationRegistryDefinitionId)}`
+        `${this.proxyBaseUrl}/revocation-registry-definition/${encodeURIComponent(revocationRegistryDefinitionId)}`,
+        {
+          method: "GET",
+          headers: this.headers,
+        }
       )
       if (!response.ok) {
         return {
@@ -301,7 +325,11 @@ export class IndyVdrProxyAnonCredsRegistry implements AnonCredsRegistry {
   ): Promise<GetRevocationStatusListReturn> {
     try {
       const response = await agentContext.config.agentDependencies.fetch(
-        `${this.proxyBaseUrl}/revocation-status-list/${encodeURIComponent(revocationRegistryId)}/${timestamp}`
+        `${this.proxyBaseUrl}/revocation-status-list/${encodeURIComponent(revocationRegistryId)}/${timestamp}`,
+        {
+          method: "GET",
+          headers: this.headers,
+        }
       )
       if (!response.ok) {
         return {

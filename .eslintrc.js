@@ -42,33 +42,12 @@ module.exports = {
         "newlines-between": "always",
       },
     ],
-    "import/no-extraneous-dependencies": [
-      "error",
-      {
-        devDependencies: false,
-      },
-    ],
   },
   overrides: [
     {
       files: ["jest.config.ts", ".eslintrc.js"],
       env: {
         node: true,
-      },
-    },
-    {
-      files: ["*.test.ts", "**/__tests__/**", "**/tests/**", "jest.*.ts", "**/samples/**"],
-      env: {
-        jest: true,
-        node: false,
-      },
-      rules: {
-        "import/no-extraneous-dependencies": [
-          "error",
-          {
-            devDependencies: true,
-          },
-        ],
       },
     },
   ],

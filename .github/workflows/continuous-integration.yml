@@ -58,10 +58,30 @@ jobs:
       - name: Compile
         run: yarn check-types
 
+  tests:
+    runs-on: ubuntu-20.04
+    name: Tests
+    needs: [validate]
+    if: needs.ci-trigger.outputs.triggered == 'true'
+    steps:
+      - name: Checkout credo-ts-indy-vdr-proxy
+        uses: actions/checkout@v2
+
+      - name: Setup NodeJS
+        uses: ./.github/actions/setup-node
+        with:
+          node-version: 18
+
+      - name: Install dependencies
+        run: yarn install
+
+      - name: Run tests
+        run: yarn test
+
   package-finder:
     runs-on: ubuntu-latest
     if: github.ref == 'refs/heads/main' && github.repository == '2060-io/credo-ts-indy-vdr-proxy' && github.event_name == 'push'
-    needs: [validate]
+    needs: [tests]
     outputs:
       packages: ${{ steps.get-packages.outputs.packages }}
     steps:
