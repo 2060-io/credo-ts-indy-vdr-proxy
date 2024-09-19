@@ -13,7 +13,7 @@ import type {
   RegisterRevocationStatusListReturn,
 } from "@credo-ts/anoncreds"
 
-import { CacheModuleConfig, type AgentContext } from "@credo-ts/core"
+import { CacheModuleConfig, type AgentContext, type CredoError } from "@credo-ts/core"
 
 import { indyVdrAnonCredsRegistryIdentifierRegex } from "./identifiers"
 
@@ -110,7 +110,7 @@ export class IndyVdrProxyAnonCredsRegistry implements AnonCredsRegistry {
       }
 
       return result
-    } catch (error) {
+    } catch (error: unknown) {
       agentContext.config.logger.error(`Error retrieving schema '${schemaId}'`, {
         error,
         schemaId,
@@ -201,7 +201,7 @@ export class IndyVdrProxyAnonCredsRegistry implements AnonCredsRegistry {
       }
 
       return result
-    } catch (error) {
+    } catch (error: unknown) {
       agentContext.config.logger.error(`Error retrieving credential definition '${credentialDefinitionId}'`, {
         error,
         credentialDefinitionId,
@@ -212,7 +212,7 @@ export class IndyVdrProxyAnonCredsRegistry implements AnonCredsRegistry {
         credentialDefinitionMetadata: {},
         resolutionMetadata: {
           error: "notFound",
-          message: `unable to resolve credential definition: ${error.message}`,
+          message: `unable to resolve credential definition: ${(error as CredoError).message}`,
         },
       }
     }
@@ -293,7 +293,7 @@ export class IndyVdrProxyAnonCredsRegistry implements AnonCredsRegistry {
       }
 
       return result
-    } catch (error) {
+    } catch (error: unknown) {
       agentContext.config.logger.error(
         `Error retrieving revocation registry definition '${revocationRegistryDefinitionId}' from ledger`,
         {
@@ -305,7 +305,7 @@ export class IndyVdrProxyAnonCredsRegistry implements AnonCredsRegistry {
       return {
         resolutionMetadata: {
           error: "notFound",
-          message: `unable to resolve revocation registry definition: ${error.message}`,
+          message: `unable to resolve revocation registry definition: ${(error as CredoError)?.message}`,
         },
         revocationRegistryDefinitionId,
         revocationRegistryDefinitionMetadata: {},
@@ -348,7 +348,7 @@ export class IndyVdrProxyAnonCredsRegistry implements AnonCredsRegistry {
       }
 
       return (await response.json()) as GetRevocationStatusListReturn
-    } catch (error) {
+    } catch (error: unknown) {
       agentContext.config.logger.error(
         // eslint-disable-next-line max-len
         `Error retrieving revocation registry delta '${revocationRegistryId}' from ledger, potentially revocation interval ends before revocation registry creation?"`,
@@ -362,7 +362,9 @@ export class IndyVdrProxyAnonCredsRegistry implements AnonCredsRegistry {
         resolutionMetadata: {
           error: "notFound",
           // eslint-disable-next-line max-len
-          message: `Error retrieving revocation registry delta '${revocationRegistryId}' from ledger, potentially revocation interval ends before revocation registry creation: ${error.message}`,
+          message: `Error retrieving revocation registry delta '${revocationRegistryId}' from ledger, potentially revocation interval ends before revocation registry creation: ${
+            (error as CredoError)?.message
+          }`,
         },
         revocationStatusListMetadata: {},
       }
