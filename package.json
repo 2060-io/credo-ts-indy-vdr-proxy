@@ -23,9 +23,9 @@
     "prepare": "husky install"
   },
   "devDependencies": {
-    "@credo-ts/askar": "^0.5.10",
-    "@credo-ts/core": "^0.5.10",
-    "@credo-ts/node": "^0.5.10",
+    "@credo-ts/askar": "^0.5.11",
+    "@credo-ts/core": "^0.5.11",
+    "@credo-ts/node": "^0.5.11",
     "@hyperledger/anoncreds-nodejs": "^0.2.4",
     "@hyperledger/anoncreds-shared": "^0.2.4",
     "@hyperledger/aries-askar-nodejs": "^0.2.3",
