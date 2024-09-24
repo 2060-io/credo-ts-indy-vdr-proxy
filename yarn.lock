@@ -500,7 +500,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@credo-ts/anoncreds@npm:0.5.11, @credo-ts/anoncreds@npm:^0.5.10":
+"@credo-ts/anoncreds@npm:0.5.11, @credo-ts/anoncreds@npm:^0.5.11":
   version: 0.5.11
   resolution: "@credo-ts/anoncreds@npm:0.5.11"
   dependencies:
@@ -518,7 +518,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@credo-ts/askar@npm:^0.5.10":
+"@credo-ts/askar@npm:^0.5.11":
   version: 0.5.11
   resolution: "@credo-ts/askar@npm:0.5.11"
   dependencies:
@@ -538,7 +538,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@credo-ts/core@npm:0.5.11, @credo-ts/core@npm:^0.5.10":
+"@credo-ts/core@npm:0.5.11, @credo-ts/core@npm:^0.5.11":
   version: 0.5.11
   resolution: "@credo-ts/core@npm:0.5.11"
   dependencies:
@@ -586,7 +586,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@credo-ts/indy-vdr@npm:^0.5.10":
+"@credo-ts/indy-vdr@npm:^0.5.11":
   version: 0.5.11
   resolution: "@credo-ts/indy-vdr@npm:0.5.11"
   dependencies:
@@ -598,7 +598,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@credo-ts/node@npm:^0.5.10":
+"@credo-ts/node@npm:^0.5.11":
   version: 0.5.11
   resolution: "@credo-ts/node@npm:0.5.11"
   dependencies:
@@ -4419,9 +4419,9 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "credo-ts-indy-vdr-proxy-client@workspace:packages/client"
   dependencies:
-    "@credo-ts/anoncreds": "npm:^0.5.10"
-    "@credo-ts/askar": "npm:^0.5.10"
-    "@credo-ts/core": "npm:^0.5.10"
+    "@credo-ts/anoncreds": "npm:^0.5.11"
+    "@credo-ts/askar": "npm:^0.5.11"
+    "@credo-ts/core": "npm:^0.5.11"
     "@types/jest": "npm:^26.0.23"
     "@types/uuid": "npm:^9.0.0"
     "@typescript-eslint/eslint-plugin": "npm:^4.28.2"
@@ -4441,11 +4441,11 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "credo-ts-indy-vdr-proxy-server@workspace:packages/server"
   dependencies:
-    "@credo-ts/anoncreds": "npm:^0.5.10"
-    "@credo-ts/askar": "npm:^0.5.10"
-    "@credo-ts/core": "npm:^0.5.10"
-    "@credo-ts/indy-vdr": "npm:^0.5.10"
-    "@credo-ts/node": "npm:^0.5.10"
+    "@credo-ts/anoncreds": "npm:^0.5.11"
+    "@credo-ts/askar": "npm:^0.5.11"
+    "@credo-ts/core": "npm:^0.5.11"
+    "@credo-ts/indy-vdr": "npm:^0.5.11"
+    "@credo-ts/node": "npm:^0.5.11"
     "@hyperledger/anoncreds-nodejs": "npm:^0.2.4"
     "@hyperledger/anoncreds-shared": "npm:^0.2.4"
     "@hyperledger/aries-askar-nodejs": "npm:^0.2.3"
@@ -4485,9 +4485,9 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "credo-ts-indy-vdr-proxy@workspace:."
   dependencies:
-    "@credo-ts/askar": "npm:^0.5.10"
-    "@credo-ts/core": "npm:^0.5.10"
-    "@credo-ts/node": "npm:^0.5.10"
+    "@credo-ts/askar": "npm:^0.5.11"
+    "@credo-ts/core": "npm:^0.5.11"
+    "@credo-ts/node": "npm:^0.5.11"
     "@hyperledger/anoncreds-nodejs": "npm:^0.2.4"
     "@hyperledger/anoncreds-shared": "npm:^0.2.4"
     "@hyperledger/aries-askar-nodejs": "npm:^0.2.3"

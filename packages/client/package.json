@@ -33,7 +33,7 @@
     "access": "public"
   },
   "devDependencies": {
-    "@credo-ts/askar": "^0.5.10",
+    "@credo-ts/askar": "^0.5.11",
     "@types/jest": "^26.0.23",
     "@types/uuid": "^9.0.0",
     "@typescript-eslint/eslint-plugin": "^4.28.2",
@@ -46,8 +46,8 @@
     "typescript": "~4.9.5"
   },
   "dependencies": {
-    "@credo-ts/anoncreds": "^0.5.10",
-    "@credo-ts/core": "^0.5.10",
+    "@credo-ts/anoncreds": "^0.5.11",
+    "@credo-ts/core": "^0.5.11",
     "nock": "^13.5.4",
     "uuid": "^9.0.0"
   }
