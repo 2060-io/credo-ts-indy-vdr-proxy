@@ -143,10 +143,8 @@ jobs:
           DH_USERNAME: ${{ secrets.DOCKER_HUB_LOGIN }}
           DH_TOKEN: ${{ secrets.DOCKER_HUB_PWD }}
           IMAGE_NAME: "indy-vdr-proxy"
-        run: | 
+        run: |
           echo "$DH_TOKEN" | docker login -u "$DH_USERNAME" --password-stdin
           docker build -f ./packages/{{matrix.package}}/Dockerfile -t $DH_USERNAME/$IMAGE_NAME:dev ./packages/{{matrix.package}}
           docker push $DH_USERNAME/$IMAGE_NAME:dev
         if: ${{ (steps.release-please.outputs.release_created == 'true') && (matrix.package == 'server') }}
-
-
