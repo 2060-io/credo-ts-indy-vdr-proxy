@@ -1,0 +1,50 @@
+
+app:
+  name: indy-vdr-proxy
+
+namespace: 
+  name: 2060-core-dev
+
+statefulset:
+  name: indy-vdr-proxy
+  serviceName: indy-vdr-proxy
+  replicas: 1
+  containerName: indy-vdr-proxy-container
+  image:
+    repository: io2060/indy-vdr-proxy
+    tag: dev
+    pullPolicy: Always
+  resources:
+    requests:
+      cpu: "100m"
+      memory: "128Mi"
+    limits:
+      cpu: "300m"
+      memory: "256Mi"
+
+  appCheckProxy:
+    name: app-check-proxy-container
+    image:
+      repository: io2060/app-check-proxy
+      tag: dev
+      pullPolicy: Always
+
+env:
+  INDY_VDR_PROXY_PORT: "3000"
+  INDY_VDR_PROXY_CONFIG_PATH: "/config/vdr-proxy/app.config.json"
+
+appCheckProxyEnv:
+  APP_PORT: "3100"
+  FIREBASE_CFG_FILE: "/config/app-check-proxy/firebase-cfg.json"
+
+service:
+  name: indy-vdr-proxy
+  ports:
+    http: 3000
+    appCheck: 3100
+
+ingress:
+  name: indy-vdr-proxy
+  enabled: true
+  host: "indyvdrproxy.ca.example.io"
+  tlsSecretName: "indyvdrproxy.ca.example.io-cert"
