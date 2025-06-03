@@ -141,6 +141,9 @@ jobs:
         env:
           NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
         if: ${{ steps.release-please.outputs.release_created }}
+      - name: Setup Helm
+        if: ${{ steps.release-please.outputs.release_created }}
+        uses: azure/setup-helm@v3
 
       - name: Build and publish Docker image
         run: |
