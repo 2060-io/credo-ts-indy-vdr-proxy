@@ -41,6 +41,9 @@ jobs:
       - name: Checkout credo-ts-indy-vdr-proxy
         uses: actions/checkout@v2
 
+      - name: Setup Helm
+        uses: azure/setup-helm@v3
+
       - name: Setup NodeJS
         uses: ./.github/actions/setup-node
         with:
@@ -57,6 +60,10 @@ jobs:
 
       - name: Compile
         run: yarn check-types
+
+      - name: Validate Helm chart
+        run: helm lint ./charts
+
 
   tests:
     runs-on: ubuntu-20.04
