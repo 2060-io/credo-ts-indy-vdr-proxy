@@ -3,7 +3,7 @@ app:
   name: indy-vdr-proxy
 
 namespace: 
-  name: 2060-core-dev
+  name: default
 
 statefulset:
   name: indy-vdr-proxy
