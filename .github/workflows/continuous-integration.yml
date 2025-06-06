@@ -16,7 +16,7 @@ concurrency:
 
 jobs:
   ci-trigger:
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-latest
     outputs:
       triggered: ${{ steps.check.outputs.triggered }}
     steps:
@@ -33,7 +33,7 @@ jobs:
           echo "SHOULD_RUN: ${SHOULD_RUN}"
           echo "::set-output name=triggered::${SHOULD_RUN}"
   validate:
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-latest
     name: Validate
     needs: [ci-trigger]
     if: needs.ci-trigger.outputs.triggered == 'true'
@@ -59,7 +59,7 @@ jobs:
         run: yarn check-types
 
   tests:
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-latest
     name: Tests
     needs: [validate]
     if: needs.ci-trigger.outputs.triggered == 'true'
