@@ -1,85 +1,171 @@
 # indy-vdr-proxy-server-chart
 
-## Overview
+## 🛍️ Overview
 
-This Helm chart deploys the indy-vdr-proxy-server application along with the necessary Kubernetes resources. It includes:
+This Helm chart deploys the `indy-vdr-proxy` application and its optional companion service `app-check-proxy`. It includes:
 
-- **Service**: Exposes the application.
-- **Ingress**: Routes external traffic to the service.
-- **StatefulSet**: Manages the deployment of the indy-vdr-proxy-server application.
+- **StatefulSet**: Main application container with optional app-check-proxy sidecar.
+- **Service**: Exposes HTTP and optionally App Check endpoints.
+- **Ingress**: Routes external traffic based on configuration.
+- **ConfigMap**: Defines runtime configurations such as `app.config.json` and (optionally) `ENDPOINT_URLS`.
 
-## Chart Structure
+---
 
-- `Chart.yaml`: Contains metadata about the chart.
-- `values.yaml`: Holds configuration values for the chart.
-- `templates/deployment.yaml`: A single template file that defines all resources.
+## 📁 Chart Structure
 
-## Installation
+```
+indy-vdr-proxy-server-chart/
+├── Chart.yaml
+├── values.yaml
+└── templates/
+    ├── _helpers.tpl
+    ├── deployment.yaml
+```
+
+- `Chart.yaml`: Chart metadata.
+- `values.yaml`: Centralized configuration file (all logic controlled from here).
+- `templates/`: All Kubernetes manifests, conditionally rendered using Helm logic.
+
+---
+
+## 🚀 Installation
 
 ### 1. Lint the Chart
 
-Ensure the chart is correctly formatted:
-
 ```bash
-helm lint ./indy-vdr-proxy-server 
+helm lint ./deployments/indy-vdr-proxy-server
 ```
 
-### 2. Render Templates
-
-Preview the generated Kubernetes manifests:
+### 2. Render Templates (preview output)
 
 ```bash
-helm template mi-release ./indy-vdr-proxy-server  --namespace <your-namespace>
-
-helm template indy-vdr-proxy ./indy-vdr-proxy-server  --namespace 2060-core-dev-test
-
+helm template indy-vdr ./deployments/indy-vdr-proxy-server --namespace <your-namespace>
 ```
 
 ### 3. Dry-Run Installation
 
-Simulate the installation without making changes to your cluster:
-
 ```bash
-helm install --dry-run --debug mi-release ./indy-vdr-proxy-server  --namespace <your-namespace>
+helm install --dry-run --debug indy-vdr ./deployments/indy-vdr-proxy-server --namespace <your-namespace>
 ```
 
 ### 4. Install the Chart
 
-If the target namespace already exists, ensure `createNamespace` is set to `false` in `values.yaml`. Otherwise, set it to `true` to have Helm create the namespace automatically.
-
 ```bash
-helm install mi-release ./indy-vdr-proxy-server  --namespace <your-namespace>
+helm install indy-vdr ./deployments/indy-vdr-proxy-server --namespace <your-namespace>
 ```
 
-**Note:**  
+> If the namespace doesn't exist, create it manually or configure `createNamespace` in your Helm pipeline logic.
 
-- `<release-name>` is a name you assign to this deployment instance. It helps Helm track and manage the release.  
-- Example: If deploying in production, you might use:
+---
 
-  ```bash
-  helm install didcomm-prod ./indy-vdr-proxy-server -chart --namespace <your-namespace-prod>
-  ```
+## ⚙️ Configuration
 
-## Configuration
+All configuration is centralized in `values.yaml`.
 
-All configurable parameters are located in the `values.yaml` file. You can adjust:
+### 🌐 Global
 
-- **Namespace**: The target namespace and whether it should be created.
-- **Service**: The name and configuration of the Service.
-- **Ingress**: Hostname and TLS settings.
-- **RBAC**: Names for ServiceAccount, Role, and RoleBinding.
-- **StatefulSet**: Application settings such as replicas, container image, and storage.
-- **Environment Variables**: Specific environment settings for your application container.
-
-## Uninstalling the Chart
-
-To remove the deployed release:
-
-```bash
-helm uninstall mi-release --namespace <your-namespace>
+```yaml
+global:
+  domain: dev.2060.io
 ```
 
-## Notes
+### 📦 Application
 
-- If the namespace exists externally, set `createNamespace` to `false` in `values.yaml`.
-- Ensure that any pre-existing resources in the namespace do not conflict with those defined in this chart.
+```yaml
+app:
+  name: indy-vdr-proxy
+```
+
+### 🏗️ StatefulSet
+
+- Fully configurable image, resources, replicas.
+- Includes support for optional `app-check-proxy` sidecar.
+
+```yaml
+statefulset:
+  replicas: 1
+  containerName: indy-vdr-proxy-container
+  image:
+    repository: io2060/indy-vdr-proxy
+    tag: dev
+    pullPolicy: Always
+  env:
+    INDY_VDR_PROXY_PORT: "3000"
+    INDY_VDR_PROXY_CONFIG_PATH: "/config/vdr-proxy/app.config.json"
+```
+
+### ✅ App Check Proxy (optional sidecar)
+
+```yaml
+appCheckProxy:
+  enabled: true
+  name: app-check-proxy-container
+  image:
+    repository: io2060/app-check-proxy
+    tag: dev
+    pullPolicy: Always
+  env:
+    APP_PORT: "3100"
+    FIREBASE_CFG_FILE: "/config/app-check-proxy/firebase-cfg.json"
+```
+
+If disabled, the following are skipped:
+
+- Sidecar container
+- App Check port in service and ingress
+- `ENDPOINT_URLS` from ConfigMap
+
+### 🧹 ConfigMap
+
+Includes two key files:
+
+- `app.config.json` (always rendered)
+- `ENDPOINT_URLS` (only rendered if `appCheckProxy.enabled: true`)
+
+Uses `tpl` to support inline template logic from `values.yaml`.
+
+```yaml
+configMap:
+  appConfigJson: |
+    {
+      "some": "config"
+    }
+  endpointUrls: |
+    {
+      "verana:gov": "https://verana.gov/endpoint"
+    }
+```
+
+### 🌐 Ingress
+
+```yaml
+ingress:
+  enabled: true
+  name: indy-vdr-proxy
+  className: nginx
+  host: "indyvdrproxy.ca.{{ .Values.global.domain }}"
+  tlsSecretName: "indyvdrproxy.ca.{{ .Values.global.domain }}-cert"
+  annotations:
+    cert-manager.io/cluster-issuer: letsencrypt-prod
+```
+
+> The ingress backend port is dynamically selected depending on whether `appCheckProxy` is enabled.
+
+### 📡 Service
+
+Exposes two ports if `appCheckProxy.enabled: true`, otherwise only HTTP.
+
+```yaml
+service:
+  ports:
+    http: 3000
+    appCheck: 3100
+```
+
+---
+
+## 🔄 Uninstalling
+
+```bash
+helm uninstall indy-vdr --namespace <your-namespace>
+```

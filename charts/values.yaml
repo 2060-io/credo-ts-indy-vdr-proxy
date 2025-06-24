@@ -1,10 +1,16 @@
+# Global settings
+global:
+  domain: dev.2060.io
 
+# Namespace for deployment (used in templates)
+namespace:
+  name: indy-vdr
+
+# App metadata
 app:
   name: indy-vdr-proxy
 
-namespace: 
-  name: default
-
+# StatefulSet configuration
 statefulset:
   name: indy-vdr-proxy
   serviceName: indy-vdr-proxy
@@ -21,30 +27,58 @@ statefulset:
     limits:
       cpu: "300m"
       memory: "256Mi"
+  env:
+    INDY_VDR_PROXY_PORT: "3000"
+    INDY_VDR_PROXY_CONFIG_PATH: "/config/vdr-proxy/app.config.json"
 
-  appCheckProxy:
-    name: app-check-proxy-container
-    image:
-      repository: io2060/app-check-proxy
-      tag: dev
-      pullPolicy: Always
+# Optional app-check-proxy container
+appCheckProxy:
+  enabled: false
+  name: app-check-proxy-container
+  image:
+    repository: io2060/app-check-proxy
+    tag: dev
+    pullPolicy: Always
+  env:
+    APP_PORT: "3100"
+    FIREBASE_CFG_FILE: "/config/app-check-proxy/firebase-cfg.json"
 
-env:
-  INDY_VDR_PROXY_PORT: "3000"
-  INDY_VDR_PROXY_CONFIG_PATH: "/config/vdr-proxy/app.config.json"
+# ConfigMap content (fully configurable)
+configMap:
+  endpointUrls: |
+    [
+      {
+        "pattern": "/.*",
+        "baseUrl": "http://indy-vdr-proxy.your-namespace-test:3000"
+      }
+    ]
+  appConfigJson: |
+    {
+      "port": 3000,
+      "logLevel": 2,
+      "networks": [
+        {
+          "genesisTransactions": "GENESIS_CONTENT_HERE",
+          "indyNamespace": "bcovrin:test",
+          "isProduction": false,
+          "connectOnStartup": true
+        }
+      ]
+    }
 
-appCheckProxyEnv:
-  APP_PORT: "3100"
-  FIREBASE_CFG_FILE: "/config/app-check-proxy/firebase-cfg.json"
-
+# Kubernetes Service configuration
 service:
   name: indy-vdr-proxy
   ports:
     http: 3000
     appCheck: 3100
 
+# Kubernetes Ingress configuration
 ingress:
   name: indy-vdr-proxy
   enabled: true
-  host: "indyvdrproxy.ca.example.io"
-  tlsSecretName: "indyvdrproxy.ca.example.io-cert"
+  host: "indyvdrproxy.ca.{{ .Values.global.domain }}"
+  tlsSecretName: "indyvdrproxy.ca.{{ .Values.global.domain }}-cert"
+  className: nginx
+  annotations:
+    cert-manager.io/cluster-issuer: letsencrypt-prod
