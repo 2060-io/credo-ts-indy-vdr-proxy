@@ -2,10 +2,6 @@
 global:
   domain: dev.2060.io
 
-# Namespace for deployment (used in templates)
-namespace:
-  name: indy-vdr
-
 # App metadata
 app:
   name: indy-vdr-proxy
