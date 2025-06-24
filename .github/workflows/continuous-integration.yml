@@ -64,7 +64,6 @@ jobs:
       - name: Validate Helm chart
         run: helm lint ./charts
 
-
   tests:
     runs-on: ubuntu-20.04
     name: Tests
