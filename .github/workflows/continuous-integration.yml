@@ -41,6 +41,9 @@ jobs:
       - name: Checkout credo-ts-indy-vdr-proxy
         uses: actions/checkout@v2
 
+      - name: Setup Helm
+        uses: azure/setup-helm@v3
+
       - name: Setup NodeJS
         uses: ./.github/actions/setup-node
         with:
@@ -57,6 +60,9 @@ jobs:
 
       - name: Compile
         run: yarn check-types
+
+      - name: Validate Helm chart
+        run: helm lint ./charts
 
   tests:
     runs-on: ubuntu-latest
@@ -107,6 +113,10 @@ jobs:
       fail-fast: false
       matrix:
         package: ${{fromJson(needs.package-finder.outputs.packages)}}
+    env:
+      DH_USERNAME: ${{ secrets.DOCKER_HUB_LOGIN }}
+      DH_TOKEN: ${{ secrets.DOCKER_HUB_PWD }}
+      IMAGE_NAME: "indy-vdr-proxy"
     steps:
       - uses: google-github-actions/release-please-action@v2
         id: release-please
@@ -137,14 +147,26 @@ jobs:
         env:
           NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
         if: ${{ steps.release-please.outputs.release_created }}
+      - name: Setup Helm
+        if: ${{ steps.release-please.outputs.release_created }}
+        uses: azure/setup-helm@v3
 
       - name: Build and publish Docker image
-        env:
-          DH_USERNAME: ${{ secrets.DOCKER_HUB_LOGIN }}
-          DH_TOKEN: ${{ secrets.DOCKER_HUB_PWD }}
-          IMAGE_NAME: "indy-vdr-proxy"
         run: |
           echo "$DH_TOKEN" | docker login -u "$DH_USERNAME" --password-stdin
-          docker build -f ./packages/{{ matrix.package }}/Dockerfile -t $DH_USERNAME/$IMAGE_NAME:dev ./packages/{{ matrix.package }}
-          docker push $DH_USERNAME/$IMAGE_NAME:dev
+          docker build -t $DH_USERNAME/$IMAGE_NAME:v$RELEASE_VERSION ./packages/{{ matrix.package }}
+          docker push $DH_USERNAME/$IMAGE_NAME:v$RELEASE_VERSION
         if: ${{ (steps.release-please.outputs.release_created == 'true') && (matrix.package == 'server') }}
+
+      - name: Log in to Docker Hub Helm Registry
+        run: |
+          echo "$DH_TOKEN" | helm registry login -u "$DH_USERNAME" --password-stdin docker.io
+
+      - name: Push Helm chart to Docker Hub OCI repo
+        env:
+          RELEASE_VERSION: ${{ steps.release-please.outputs.release_version }}
+        run: |
+          sed -i "s/^version:.*/version: $RELEASE_VERSION/" ./charts/Chart.yaml
+          helm dependency update ./charts
+          helm package ./charts -d ./charts
+          helm push ./charts/$IMAGE_NAME-$RELEASE_VERSION.tgz oci://docker.io/$DH_USERNAME

@@ -1,0 +1,5 @@
+apiVersion: v2
+name: indy-vdr-proxy-chart
+description: Helm chart for deploying indy-vdr-proxy
+type: application
+version: 0.0.4

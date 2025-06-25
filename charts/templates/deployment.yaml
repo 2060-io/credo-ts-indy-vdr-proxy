@@ -1,0 +1,136 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: indy-vdr-proxy-config
+  namespace: {{ .Release.Namespace }}
+  labels:
+    {{ include "indy-vdr-proxy.labels" . | nindent 4 }}
+data:
+  {{- if .Values.appCheckProxy.enabled }}
+  ENDPOINT_URLS: |-
+    {{- tpl .Values.configMap.endpointUrls . | nindent 4 }}
+  {{- end }}
+  app.config.json: |-
+    {{- tpl .Values.configMap.appConfigJson . | nindent 4 }}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "indy-vdr-proxy.fullname" . }}
+  namespace: {{ .Release.Namespace }}
+  labels:
+    {{ include "indy-vdr-proxy.labels" . | nindent 4 }}
+spec:
+  selector:
+    {{ include "indy-vdr-proxy.selectorLabels" . | nindent 4 }}
+  type: ClusterIP
+  ports:
+    - name: http
+      port: {{ .Values.service.ports.http }}
+      targetPort: 3000
+  {{- if .Values.appCheckProxy.enabled }}
+    - name: app-check
+      port: {{ .Values.service.ports.appCheck }}
+      targetPort: 3100
+  {{- end }}
+---
+{{- if .Values.ingress.enabled }}
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: {{ .Values.ingress.name }}
+  namespace: {{ .Release.Namespace }}
+  labels:
+    {{ include "indy-vdr-proxy.labels" . | nindent 4 }}
+  annotations:
+    {{- range $key, $value := .Values.ingress.annotations }}
+    {{ $key }}: {{ $value | quote }}
+    {{- end }}
+spec:
+  ingressClassName: {{ .Values.ingress.className }}
+  tls:
+    - hosts:
+        - {{ tpl .Values.ingress.host . }}
+      secretName: {{ tpl .Values.ingress.tlsSecretName . }}
+  rules:
+    - host: {{ tpl .Values.ingress.host . }}
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: {{ include "indy-vdr-proxy.fullname" . }}
+                port:
+                  number: {{ ternary .Values.service.ports.appCheck .Values.service.ports.http .Values.appCheckProxy.enabled }}
+{{- end }}
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: {{ include "indy-vdr-proxy.fullname" . }}
+  namespace: {{ .Release.Namespace }}
+  labels:
+    {{ include "indy-vdr-proxy.labels" . | nindent 4 }}
+spec:
+  serviceName: {{ .Values.statefulset.serviceName }}
+  replicas: {{ .Values.statefulset.replicas }}
+  selector:
+    matchLabels:
+      {{ include "indy-vdr-proxy.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      labels:
+        {{ include "indy-vdr-proxy.selectorLabels" . | nindent 8 }}
+    spec:
+      containers:
+        - name: {{ .Values.statefulset.containerName }}
+          image: io2060/indy-vdr-proxy:{{ .Chart.Version }}
+          imagePullPolicy: {{ .Values.statefulset.image.pullPolicy }}
+          ports:
+            - containerPort: 3000
+          env:
+            {{- range $key, $val := .Values.statefulset.env }}
+            - name: {{ $key }}
+              value: "{{ $val }}"
+            {{- end }}
+          resources:
+            requests:
+              cpu: {{ .Values.statefulset.resources.requests.cpu | quote }}
+              memory: {{ .Values.statefulset.resources.requests.memory | quote }}
+            limits:
+              cpu: {{ .Values.statefulset.resources.limits.cpu | quote }}
+              memory: {{ .Values.statefulset.resources.limits.memory | quote }}
+          volumeMounts:
+            - name: indy-vdr-proxy-config
+              mountPath: /config/vdr-proxy
+        {{- if .Values.appCheckProxy.enabled }}
+        - name: {{ .Values.appCheckProxy.name }}
+          image: io2060/app-check-proxy:v1.0.0
+          imagePullPolicy: {{ .Values.appCheckProxy.image.pullPolicy }}
+          ports:
+            - containerPort: 3100
+          env:
+            {{- range $key, $val := .Values.appCheckProxy.env }}
+            - name: {{ $key }}
+              value: "{{ $val }}"
+            {{- end }}
+          volumeMounts:
+            - name: firebase-config-volume
+              mountPath: /config/app-check-proxy
+              readOnly: true
+        {{- end }}
+      volumes:
+        - name: indy-vdr-proxy-config
+          configMap:
+            name: indy-vdr-proxy-config
+            items:
+              - key: app.config.json
+                path: app.config.json
+              - key: ENDPOINT_URLS
+                path: ENDPOINT_URLS
+        {{- if .Values.appCheckProxy.enabled }}
+        - name: firebase-config-volume
+          configMap:
+            name: firebase-config
+        {{- end }}
