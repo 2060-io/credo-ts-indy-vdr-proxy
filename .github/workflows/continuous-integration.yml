@@ -155,7 +155,7 @@ jobs:
         run: |
           echo "$DH_TOKEN" | docker login -u "$DH_USERNAME" --password-stdin
           docker build -f ./packages/{{ matrix.package }}/Dockerfile -t $DH_USERNAME/$IMAGE_NAME:dev ./packages/{{ matrix.package }}
-          docker push $DH_USERNAME/$IMAGE_NAME:dev
+          docker push $DH_USERNAME/$IMAGE_NAME:v$RELEASE_VERSION
         if: ${{ (steps.release-please.outputs.release_created == 'true') && (matrix.package == 'server') }}
 
       - name: Log in to Docker Hub Helm Registry
