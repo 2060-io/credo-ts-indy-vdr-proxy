@@ -85,7 +85,7 @@ spec:
     spec:
       containers:
         - name: {{ .Values.statefulset.containerName }}
-          image: "{{ .Values.statefulset.image.repository }}:{{ .Values.statefulset.image.tag }}"
+          image: io2060/indy-vdr-proxy:{{ .Chart.Version }}
           imagePullPolicy: {{ .Values.statefulset.image.pullPolicy }}
           ports:
             - containerPort: 3000
@@ -106,7 +106,7 @@ spec:
               mountPath: /config/vdr-proxy
         {{- if .Values.appCheckProxy.enabled }}
         - name: {{ .Values.appCheckProxy.name }}
-          image: "{{ .Values.appCheckProxy.image.repository }}:{{ .Values.appCheckProxy.image.tag }}"
+          image: io2060/app-check-proxy:v1.0.0
           imagePullPolicy: {{ .Values.appCheckProxy.image.pullPolicy }}
           ports:
             - containerPort: 3100
