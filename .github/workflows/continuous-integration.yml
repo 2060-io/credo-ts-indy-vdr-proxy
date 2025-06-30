@@ -159,10 +159,12 @@ jobs:
         if: ${{ (steps.release-please.outputs.release_created == 'true') && (matrix.package == 'server') }}
 
       - name: Log in to Docker Hub Helm Registry
+        if: ${{ (steps.release-please.outputs.release_created == 'true') && (matrix.package == 'server') }}
         run: |
           echo "$DH_TOKEN" | helm registry login -u "$DH_USERNAME" --password-stdin docker.io
 
       - name: Push Helm chart to Docker Hub OCI repo
+        if: ${{ (steps.release-please.outputs.release_created == 'true') && (matrix.package == 'server') }}      
         env:
           RELEASE_VERSION: ${{ steps.release-please.outputs.release_version }}
         run: |
