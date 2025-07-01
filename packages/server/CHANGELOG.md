@@ -1,5 +1,12 @@
 # Changelog
 
+### [0.2.7](https://www.github.com/2060-io/credo-ts-indy-vdr-proxy/compare/credo-ts-indy-vdr-proxy-server-v0.2.6...credo-ts-indy-vdr-proxy-server-v0.2.7) (2025-07-01)
+
+
+### Bug Fixes
+
+* **server:** helm chart name ([a4c3f51](https://www.github.com/2060-io/credo-ts-indy-vdr-proxy/commit/a4c3f51a1479851efd176cc24718f66fac4d2aa5))
+
 ### [0.2.6](https://www.github.com/2060-io/credo-ts-indy-vdr-proxy/compare/credo-ts-indy-vdr-proxy-server-v0.2.5...credo-ts-indy-vdr-proxy-server-v0.2.6) (2025-07-01)
 
 
