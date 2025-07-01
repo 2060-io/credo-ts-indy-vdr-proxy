@@ -172,6 +172,7 @@ jobs:
           RELEASE_VERSION: ${{ steps.release-please.outputs.version }}
         run: |
           sed -i "s/^version:.*/version: v$RELEASE_VERSION/" ./charts/Chart.yaml
+          CHART_NAME=$(grep '^name:' ./charts/Chart.yaml | awk '{print $2}')
           helm dependency update ./charts
           helm package ./charts -d ./charts
-          helm push ./charts/$IMAGE_NAME-v$RELEASE_VERSION.tgz oci://docker.io/$DH_USERNAME
+          helm push ./charts/$CHART_NAME-v$RELEASE_VERSION.tgz oci://docker.io/$DH_USERNAME
