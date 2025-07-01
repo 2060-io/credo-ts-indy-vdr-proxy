@@ -2,7 +2,13 @@ import { Agent, ConsoleLogger, DidsModule, Logger, LogLevel } from "@credo-ts/co
 import { agentDependencies } from "@credo-ts/node"
 import { AskarModule } from "@credo-ts/askar"
 import { AnonCredsModule } from "@credo-ts/anoncreds"
-import { IndyVdrAnonCredsRegistry, IndyVdrModule, IndyVdrPoolConfig, IndyVdrSovDidResolver } from "@credo-ts/indy-vdr"
+import {
+  IndyVdrAnonCredsRegistry,
+  IndyVdrIndyDidResolver,
+  IndyVdrModule,
+  IndyVdrPoolConfig,
+  IndyVdrSovDidResolver,
+} from "@credo-ts/indy-vdr"
 import { anoncreds } from "@hyperledger/anoncreds-nodejs"
 import { ariesAskar } from "@hyperledger/aries-askar-nodejs"
 import { indyVdr } from "@hyperledger/indy-vdr-nodejs"
@@ -33,7 +39,7 @@ const getIndyVdrProxyAgentModules = (networks: [IndyVdrPoolConfig, ...IndyVdrPoo
       registries: [new IndyVdrAnonCredsRegistry()],
       anoncreds,
     }),
-    dids: new DidsModule({ resolvers: [new IndyVdrSovDidResolver()] }),
+    dids: new DidsModule({ resolvers: [new IndyVdrSovDidResolver(), new IndyVdrIndyDidResolver()] }),
     indyVdr: new IndyVdrModule({
       indyVdr,
       networks,
