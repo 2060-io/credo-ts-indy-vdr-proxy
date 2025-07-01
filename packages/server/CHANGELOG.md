@@ -1,5 +1,12 @@
 # Changelog
 
+### [0.2.4](https://www.github.com/2060-io/credo-ts-indy-vdr-proxy/compare/credo-ts-indy-vdr-proxy-server-v0.2.3...credo-ts-indy-vdr-proxy-server-v0.2.4) (2025-07-01)
+
+
+### Bug Fixes
+
+* **server:** release version in docker build ([cb73fd9](https://www.github.com/2060-io/credo-ts-indy-vdr-proxy/commit/cb73fd9f8caa7b46d2cf5480d5cf6d8f0f4789bd))
+
 ### [0.2.3](https://www.github.com/2060-io/credo-ts-indy-vdr-proxy/compare/credo-ts-indy-vdr-proxy-server-v0.2.2...credo-ts-indy-vdr-proxy-server-v0.2.3) (2025-07-01)
 
 
