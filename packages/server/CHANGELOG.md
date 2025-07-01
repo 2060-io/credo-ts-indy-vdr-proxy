@@ -1,5 +1,12 @@
 # Changelog
 
+### [0.2.3](https://www.github.com/2060-io/credo-ts-indy-vdr-proxy/compare/credo-ts-indy-vdr-proxy-server-v0.2.2...credo-ts-indy-vdr-proxy-server-v0.2.3) (2025-07-01)
+
+
+### Features
+
+* **server:** support indy:did method ([d07399d](https://www.github.com/2060-io/credo-ts-indy-vdr-proxy/commit/d07399def6e02aadbf7940fb6f0b288f653ce0e0))
+
 ### [0.2.2](https://www.github.com/2060-io/credo-ts-indy-vdr-proxy/compare/credo-ts-indy-vdr-proxy-server-v0.2.1...credo-ts-indy-vdr-proxy-server-v0.2.2) (2025-07-01)
 
 
