@@ -154,7 +154,7 @@ jobs:
       - name: Build and publish Docker image
         run: |
           echo "$DH_TOKEN" | docker login -u "$DH_USERNAME" --password-stdin
-          docker build -t $DH_USERNAME/$IMAGE_NAME:v$RELEASE_VERSION ./packages/{{ matrix.package }}
+          docker build -f packages/{{ matrix.package }}/Dockerfile -t $DH_USERNAME/$IMAGE_NAME:v$RELEASE_VERSION packages/{{ matrix.package }}
           docker push $DH_USERNAME/$IMAGE_NAME:v$RELEASE_VERSION
         if: ${{ (steps.release-please.outputs.release_created == 'true') && (matrix.package == 'server') }}
 
@@ -168,7 +168,7 @@ jobs:
         env:
           RELEASE_VERSION: ${{ steps.release-please.outputs.release_version }}
         run: |
-          sed -i "s/^version:.*/version: $RELEASE_VERSION/" ./charts/Chart.yaml
+          sed -i "s/^version:.*/version: v$RELEASE_VERSION/" ./charts/Chart.yaml
           helm dependency update ./charts
           helm package ./charts -d ./charts
-          helm push ./charts/$IMAGE_NAME-$RELEASE_VERSION.tgz oci://docker.io/$DH_USERNAME
+          helm push ./charts/$IMAGE_NAME-v$RELEASE_VERSION.tgz oci://docker.io/$DH_USERNAME
