@@ -153,10 +153,10 @@ jobs:
 
       - name: Build and publish Docker image
         env:
-          RELEASE_VERSION: ${{ steps.release-please.outputs.release_version }}
+          RELEASE_VERSION: ${{ steps.release-please.outputs.version }}
         run: |
           echo "$DH_TOKEN" | docker login -u "$DH_USERNAME" --password-stdin
-          docker build -f packages/{{ matrix.package }}/Dockerfile -t $DH_USERNAME/$IMAGE_NAME:v$RELEASE_VERSION packages/{{ matrix.package }}
+          docker build -t $DH_USERNAME/$IMAGE_NAME:v$RELEASE_VERSION ./packages/{{ matrix.package }}
           docker push $DH_USERNAME/$IMAGE_NAME:v$RELEASE_VERSION
         if: ${{ (steps.release-please.outputs.release_created == 'true') && (matrix.package == 'server') }}
 
@@ -168,7 +168,7 @@ jobs:
       - name: Push Helm chart to Docker Hub OCI repo
         if: ${{ (steps.release-please.outputs.release_created == 'true') && (matrix.package == 'server') }}
         env:
-          RELEASE_VERSION: ${{ steps.release-please.outputs.release_version }}
+          RELEASE_VERSION: ${{ steps.release-please.outputs.version }}
         run: |
           sed -i "s/^version:.*/version: v$RELEASE_VERSION/" ./charts/Chart.yaml
           helm dependency update ./charts
