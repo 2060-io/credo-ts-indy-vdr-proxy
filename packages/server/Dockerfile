@@ -1,13 +1,7 @@
 # Setup
 FROM node:22 AS base
 
-# Setup env variable for yarn
-ENV YARN_VERSION=4.3.1
-
-# Update dependencies, add python to the base image, install and use yarn 4.x
-RUN apt-get update && \
-  corepack enable && \
-  corepack prepare yarn@${YARN_VERSION}
+RUN corepack enable
 
 # Create app directory
 WORKDIR /app
@@ -18,11 +12,9 @@ COPY . .
 # Build server
 FROM base AS builder
 
-# Fix for node-gyp issues (Yarn 4 doesn't do global installs), install deps and remove created cache, run build
-RUN npm install -g node-gyp && \
-  yarn install --immutable && \
-  yarn cache clean && \
-  yarn build
+RUN pnpm install && \
+  pnpm cache clean && \
+  pnpm build
 
 # Run server
 FROM builder AS runner

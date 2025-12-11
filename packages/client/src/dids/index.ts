@@ -1,1 +1,1 @@
-export * from "./IndyVdrProxyDidResolver"
+export * from './IndyVdrProxyDidResolver'

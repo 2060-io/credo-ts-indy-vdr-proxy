@@ -1,22 +1,17 @@
 {
-  "compilerOptions": {
+ "compilerOptions": {
     "module": "commonjs",
-    "target": "ES2017",
     "declaration": true,
-    "sourceMap": true,
-    "strict": true,
-    "noEmitOnError": true,
-    "outDir": "./build",
-    "types": [],
-    "esModuleInterop": true,
-    "allowSyntheticDefaultImports": true,
-    "resolveJsonModule": true,
-    "skipLibCheck": true,
-    "experimentalDecorators": true,
+    "removeComments": true,
     "emitDecoratorMetadata": true,
-    "useUnknownInCatchVariables": false,
-    "noImplicitAny": false,
-    "jsx": "react"
+    "experimentalDecorators": true,
+    "allowSyntheticDefaultImports": true,
+    "target": "ES2021",
+    "sourceMap": true,
+    "outDir": "./dist",
+    "baseUrl": "./",
+    "incremental": true,
+    "skipLibCheck": true
   },
   "include": ["src/**/*", "types"],
   "exclude": [

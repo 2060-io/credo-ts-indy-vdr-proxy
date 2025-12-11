@@ -1,2 +1,3 @@
-export { IndyVdrProxyModule } from "./app.module"
-export { IndyVdrProxyAgent, setupAgent } from "./agent"
+export { setupAgent } from './agent'
+export type { IndyVdrProxyAgent } from './agent'
+export { IndyVdrProxyModule } from './app.module'

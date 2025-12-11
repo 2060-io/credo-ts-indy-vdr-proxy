@@ -1,29 +1,6 @@
 {
+  "extends": "../../tsconfig.build.json",
   "compilerOptions": {
-    "module": "commonjs",
-    "target": "ES2017",
-    "declaration": true,
-    "sourceMap": true,
-    "strict": true,
-    "noEmitOnError": true,
-    "outDir": "./build",
-    "types": [],
-    "esModuleInterop": true,
-    "allowSyntheticDefaultImports": true,
-    "resolveJsonModule": true,
-    "skipLibCheck": true,
-    "experimentalDecorators": true,
-    "emitDecoratorMetadata": true,
-    "useUnknownInCatchVariables": false,
-    "jsx": "react"
-  },
-  "include": ["src/**/*", "types"],
-  "exclude": [
-    "node_modules",
-    "**/build/*",
-    "**/*.test.ts",
-    "**/__tests__/*.ts",
-    "**/__tests__/*.tsx",
-    "**/__mocks__/*.ts"
-  ]
+    "types": ["node"]
+  }
 }

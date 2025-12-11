@@ -9,20 +9,20 @@ Although it can be used as a general gateway to multiple Indy networks (much in 
 In order to run the server in standalone mode, you just need to install all dependencies by doing:
 
 ```
-yarn install
+pnpm install
 ```
 
 and then go to server directory and execute:
 
 ```
 cd packages/server
-yarn run start
+pnpm start
 ```
 
 By default, Indy VDR Proxy Server runs at port 3000 and supports only [BCovrin Test network](http://test.bcovrin.vonx.io/). This can be overriden by either updating the configuration file located at `res/app.config.json` or providing your own by setting the environment variable `INDY_VDR_PROXY_CONFIG_PATH`. E.g.:
 
 ```
-INDY_VDR_PROXY_CONFIG_PATH=/my-directory/my-config.file.json yarn run start
+INDY_VDR_PROXY_CONFIG_PATH=/my-directory/my-config.file.json pnpm start
 ```
 
 If you want to integrate Indy VDR Proxy in your own NestJS-based project, you can by importing `IndyVdrProxyServerModule`. You'll need to call `register` method passing an `IndyVdrProxyAgent` instance (which could be your own Credo-based Agent as long as it contains all required modules):

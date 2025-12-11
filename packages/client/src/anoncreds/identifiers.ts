@@ -48,5 +48,5 @@ const indyVdrAnonCredsRegexes = [
 ]
 
 export const indyVdrAnonCredsRegistryIdentifierRegex = new RegExp(
-  indyVdrAnonCredsRegexes.map((r) => r.source).join("|")
+  indyVdrAnonCredsRegexes.map((r) => r.source).join('|')
 )

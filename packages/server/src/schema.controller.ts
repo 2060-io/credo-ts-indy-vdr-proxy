@@ -1,16 +1,16 @@
-import { Controller, Get, Param } from "@nestjs/common"
-import { AgentService } from "./agent.service"
-import { GetSchemaReturn } from "@credo-ts/anoncreds/build/services/registry"
+import type { GetSchemaReturn } from '@credo-ts/anoncreds'
+import { Controller, Get, Param } from '@nestjs/common'
+import { AgentService } from './agent.service'
 
 interface GetSchemaParams {
   schemaId: string
 }
 
-@Controller("schema")
+@Controller('schema')
 export class SchemaController {
   constructor(private readonly agentService: AgentService) {}
 
-  @Get("/:schemaId")
+  @Get('/:schemaId')
   public async getSchema(@Param() params: GetSchemaParams): Promise<GetSchemaReturn> {
     const agent = await this.agentService.getAgent()
 

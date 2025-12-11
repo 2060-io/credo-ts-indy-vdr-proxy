@@ -1,8 +1,8 @@
-import type { Headers } from "../types"
-import type { DidResolutionResult, ParsedDid, DidResolver, AgentContext } from "@credo-ts/core"
+import type { AgentContext, DidResolutionResult, DidResolver, ParsedDid } from '@credo-ts/core'
+import type { Headers } from '../types'
 
 export class IndyVdrProxyDidResolver implements DidResolver {
-  public readonly supportedMethods = ["sov", "indy"]
+  public readonly supportedMethods = ['sov', 'indy']
 
   public readonly allowsCaching = true
 
@@ -10,7 +10,7 @@ export class IndyVdrProxyDidResolver implements DidResolver {
   private _headers?: Headers
 
   private async getHeaders(): Promise<Record<string, string> | undefined> {
-    if (typeof this._headers === "function") {
+    if (typeof this._headers === 'function') {
       return await Promise.resolve(this._headers())
     }
 
@@ -30,7 +30,7 @@ export class IndyVdrProxyDidResolver implements DidResolver {
       const response = await agentContext.config.agentDependencies.fetch(
         `${this.proxyBaseUrl}/did/${encodeURIComponent(did)}`,
         {
-          method: "GET",
+          method: 'GET',
           headers: await this.getHeaders(),
         }
       )
@@ -39,7 +39,7 @@ export class IndyVdrProxyDidResolver implements DidResolver {
           didDocument: null,
           didDocumentMetadata,
           didResolutionMetadata: {
-            error: "failed",
+            error: 'failed',
             message: `resolver_error: Unable to resolve did '${did}': server status ${response.status}`,
           },
         }
@@ -50,7 +50,7 @@ export class IndyVdrProxyDidResolver implements DidResolver {
         didDocument: null,
         didDocumentMetadata,
         didResolutionMetadata: {
-          error: "notFound",
+          error: 'notFound',
           message: `resolver_error: Unable to resolve did '${did}': ${error}`,
         },
       }

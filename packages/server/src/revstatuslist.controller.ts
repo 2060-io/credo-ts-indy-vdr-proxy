@@ -1,17 +1,17 @@
-import { Controller, Get, Param } from "@nestjs/common"
-import { AgentService } from "./agent.service"
-import { GetRevocationStatusListReturn } from "@credo-ts/anoncreds/build/services/registry"
+import type { GetRevocationStatusListReturn } from '@credo-ts/anoncreds'
+import { Controller, Get, Param } from '@nestjs/common'
+import { AgentService } from './agent.service'
 
 interface GetRevocationStatusListParams {
   revocationRegistryDefinition: string
   timestamp: number
 }
 
-@Controller("revocation-status-list")
+@Controller('revocation-status-list')
 export class RevocationStatusListController {
   constructor(private readonly agentService: AgentService) {}
 
-  @Get("/:revocationRegistryDefinition/:timestamp")
+  @Get('/:revocationRegistryDefinition/:timestamp')
   public async getRevocationRegistryDefinition(
     @Param() params: GetRevocationStatusListParams
   ): Promise<GetRevocationStatusListReturn> {
