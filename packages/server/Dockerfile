@@ -7,7 +7,9 @@ RUN corepack enable
 WORKDIR /app
 
 # Copy source code into app folder
-COPY . .
+COPY ./src ./src
+COPY ./res ./res
+COPY *.json .
 
 # Build server
 FROM base AS builder
@@ -27,4 +29,4 @@ RUN mkdir /var/credo && \
 EXPOSE 3000
 
 # Run server
-CMD ["node", "build/main.js"]
+CMD ["node", "dist/main.js"]
