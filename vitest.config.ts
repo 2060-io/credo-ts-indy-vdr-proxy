@@ -14,8 +14,8 @@ export default defineConfig({
     watch: false,
 
     // hooks sometimes interact with ledger etc, so it needs to be longer than default 10000
-    hookTimeout: 40000,
-    testTimeout: 120000,
+    hookTimeout: 10000,
+    testTimeout: 10000,
 
     coverage: {
       include: ['**/*.{js,jsx,ts,tsx}'],

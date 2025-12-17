@@ -7,19 +7,15 @@ RUN corepack enable
 WORKDIR /app
 
 # Copy source code into app folder
-COPY ./src ./src
-COPY ./res ./res
-COPY *.json .
+COPY . /app
 
-# Build server
-FROM base AS builder
+RUN rm -rf node_modules
 
-RUN pnpm install && \
-  pnpm cache clean && \
-  pnpm build
+RUN pnpm install --frozen-lockfile
+RUN pnpm cache clean
+RUN pnpm --filter credo-ts-indy-vdr-proxy-server... build
 
-# Run server
-FROM builder AS runner
+RUN cp -r ./packages/server/res ./res
 
 # Create a volume for the Credo agent data, allow read write access
 RUN mkdir /var/credo && \
@@ -29,4 +25,4 @@ RUN mkdir /var/credo && \
 EXPOSE 3000
 
 # Run server
-CMD ["node", "dist/main.js"]
+CMD ["node", "packages/server/dist/main.js"]

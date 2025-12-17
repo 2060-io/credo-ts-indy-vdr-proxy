@@ -9,7 +9,7 @@
     "paths": {
       "*": ["packages/*/src"]
     },
-    "types": ["jest", "node"]
+    "types": ["vitest", "node"]
   },
   "exclude": ["node_modules", "build"]
 }

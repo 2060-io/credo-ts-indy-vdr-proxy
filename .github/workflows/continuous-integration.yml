@@ -168,7 +168,7 @@ jobs:
           PACKAGE: ${{ matrix.package }}
         run: |
           echo "$DH_TOKEN" | docker login -u "$DH_USERNAME" --password-stdin
-          docker build -t "$DH_USERNAME/$IMAGE_NAME:v$RELEASE_VERSION" ./packages/$PACKAGE
+          docker build -t "$DH_USERNAME/$IMAGE_NAME:v$RELEASE_VERSION" -f ./packages/$PACKAGE/Dockerfile .
           docker push "$DH_USERNAME/$IMAGE_NAME:v$RELEASE_VERSION"
         if: ${{ (steps.release-please.outputs.release_created == 'true') && (matrix.package == 'server') }}
 
