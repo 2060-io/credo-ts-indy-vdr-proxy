@@ -1,31 +1,21 @@
 # Setup
 FROM node:22 AS base
 
-# Setup env variable for yarn
-ENV YARN_VERSION=4.3.1
-
-# Update dependencies, add python to the base image, install and use yarn 4.x
-RUN apt-get update && \
-  corepack enable && \
-  corepack prepare yarn@${YARN_VERSION}
+RUN corepack enable
 
 # Create app directory
 WORKDIR /app
 
 # Copy source code into app folder
-COPY . .
+COPY . /app
 
-# Build server
-FROM base AS builder
+RUN rm -rf node_modules
 
-# Fix for node-gyp issues (Yarn 4 doesn't do global installs), install deps and remove created cache, run build
-RUN npm install -g node-gyp && \
-  yarn install --immutable && \
-  yarn cache clean && \
-  yarn build
+RUN pnpm install --frozen-lockfile
+RUN pnpm cache clean
+RUN pnpm --filter credo-ts-indy-vdr-proxy-server... build
 
-# Run server
-FROM builder AS runner
+RUN cp -r ./packages/server/res ./res
 
 # Create a volume for the Credo agent data, allow read write access
 RUN mkdir /var/credo && \
@@ -35,4 +25,4 @@ RUN mkdir /var/credo && \
 EXPOSE 3000
 
 # Run server
-CMD ["node", "build/main.js"]
+CMD ["node", "packages/server/dist/main.js"]

@@ -1,3 +1,1 @@
-import "reflect-metadata"
-
-jest.setTimeout(5000)
+import 'reflect-metadata'

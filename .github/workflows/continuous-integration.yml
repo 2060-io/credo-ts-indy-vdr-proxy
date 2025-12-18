@@ -39,27 +39,29 @@ jobs:
     if: needs.ci-trigger.outputs.triggered == 'true'
     steps:
       - name: Checkout credo-ts-indy-vdr-proxy
-        uses: actions/checkout@v2
+        uses: actions/checkout@v6
 
       - name: Setup Helm
         uses: azure/setup-helm@v3
 
-      - name: Setup NodeJS
-        uses: ./.github/actions/setup-node
+      - uses: pnpm/action-setup@v4
+      - name: Setup node v22
+        uses: actions/setup-node@v6
         with:
-          node-version: 18
+          node-version: 22
+          cache: pnpm
 
       - name: Install dependencies
-        run: yarn install
+        run: pnpm install --frozen-lockfile
 
-      - name: Linting
-        run: yarn lint
+      - name: Types check
+        run: pnpm types:check
 
-      - name: Prettier
-        run: yarn check-format
+      - name: Style check
+        run: pnpm style:check
 
-      - name: Compile
-        run: yarn check-types
+      - name: Build
+        run: pnpm build
 
       - name: Validate Helm chart
         run: helm lint ./charts
@@ -71,18 +73,20 @@ jobs:
     if: needs.ci-trigger.outputs.triggered == 'true'
     steps:
       - name: Checkout credo-ts-indy-vdr-proxy
-        uses: actions/checkout@v2
+        uses: actions/checkout@v6
 
-      - name: Setup NodeJS
-        uses: ./.github/actions/setup-node
+      - uses: pnpm/action-setup@v4
+      - name: Setup node v22
+        uses: actions/setup-node@v6
         with:
-          node-version: 18
+         node-version: 22
+         cache: pnpm
 
       - name: Install dependencies
-        run: yarn install
+        run: pnpm install --frozen-lockfile
 
       - name: Run tests
-        run: yarn test
+        run: pnpm test
 
   package-finder:
     runs-on: ubuntu-latest
@@ -94,17 +98,19 @@ jobs:
       - name: Checkout credo-ts-indy-vdr-proxy
         uses: actions/checkout@v2
 
-      - name: Setup NodeJS
-        uses: ./.github/actions/setup-node
+      - uses: pnpm/action-setup@v4
+      - name: Setup node v22
+        uses: actions/setup-node@v6
         with:
-          node-version: 18
+         node-version: 22
+         cache: pnpm
 
       - name: Install dependencies
-        run: yarn install
+        run: pnpm install --frozen-lockfile
 
       - id: get-packages
         name: Get all NPM packages
-        run: yarn ts-node ./scripts/getPackages.ts
+        run: pnpm ts-node ./scripts/getPackages.ts
 
   release-please:
     runs-on: ubuntu-latest
@@ -132,15 +138,20 @@ jobs:
 
       # Initiate release process if release was created
       - name: Checkout credo-ts-indy-vdr-proxy
-        uses: actions/checkout@v2
+        uses: actions/checkout@v6
         if: ${{ steps.release-please.outputs.release_created }}
-      - name: Setup NodeJS
-        uses: ./.github/actions/setup-node
+      
+      - uses: pnpm/action-setup@v4
+        if: ${{ steps.release-please.outputs.release_created }}
+
+      - name: Setup node v22
+        uses: actions/setup-node@v6
         with:
-          node-version: 18
+         node-version: 22
+         cache: pnpm
         if: ${{ steps.release-please.outputs.release_created }}
       - name: Install dependencies
-        run: yarn install --frozen-lockfile
+        run: pnpm install --frozen-lockfile
         if: ${{ steps.release-please.outputs.release_created }}
       - name: Release to NPM
         run: npm publish ./packages/${{ matrix.package }}
@@ -157,7 +168,7 @@ jobs:
           PACKAGE: ${{ matrix.package }}
         run: |
           echo "$DH_TOKEN" | docker login -u "$DH_USERNAME" --password-stdin
-          docker build -t "$DH_USERNAME/$IMAGE_NAME:v$RELEASE_VERSION" ./packages/$PACKAGE
+          docker build -t "$DH_USERNAME/$IMAGE_NAME:v$RELEASE_VERSION" -f ./packages/$PACKAGE/Dockerfile .
           docker push "$DH_USERNAME/$IMAGE_NAME:v$RELEASE_VERSION"
         if: ${{ (steps.release-please.outputs.release_created == 'true') && (matrix.package == 'server') }}
 

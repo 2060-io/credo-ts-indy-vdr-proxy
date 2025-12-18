@@ -1,31 +1,25 @@
-import { Agent, ConsoleLogger, DidsModule, Logger, LogLevel } from "@credo-ts/core"
-import { agentDependencies } from "@credo-ts/node"
-import { AskarModule } from "@credo-ts/askar"
-import { AnonCredsModule } from "@credo-ts/anoncreds"
+import { AnonCredsModule } from '@credo-ts/anoncreds'
+import { AskarModule } from '@credo-ts/askar'
+import { Agent, ConsoleLogger, DidsModule, type Logger, LogLevel } from '@credo-ts/core'
 import {
   IndyVdrAnonCredsRegistry,
   IndyVdrIndyDidResolver,
   IndyVdrModule,
-  IndyVdrPoolConfig,
+  type IndyVdrPoolConfig,
   IndyVdrSovDidResolver,
-} from "@credo-ts/indy-vdr"
-import { anoncreds } from "@hyperledger/anoncreds-nodejs"
-import { ariesAskar } from "@hyperledger/aries-askar-nodejs"
-import { indyVdr } from "@hyperledger/indy-vdr-nodejs"
+} from '@credo-ts/indy-vdr'
+import { agentDependencies } from '@credo-ts/node'
+import { anoncreds } from '@hyperledger/anoncreds-nodejs'
+import { indyVdr } from '@hyperledger/indy-vdr-nodejs'
+import { askar } from '@openwallet-foundation/askar-nodejs'
 
 export type IndyVdrProxyAgent = Agent<ReturnType<typeof getIndyVdrProxyAgentModules>>
 
 export function setupAgent(options: { networks: [IndyVdrPoolConfig, ...IndyVdrPoolConfig[]]; logger?: Logger }) {
   return new Agent({
     config: {
-      label: "Indy VDR Proxy",
-      walletConfig: {
-        id: "indy-vdr-proxy",
-        key: "indy-vdr-proxy",
-      },
       autoUpdateStorageOnStartup: true,
-      backupBeforeStorageUpdate: false,
-      logger: options.logger ?? new ConsoleLogger(LogLevel.off),
+      logger: options.logger ?? new ConsoleLogger(LogLevel.debug),
     },
     dependencies: agentDependencies,
     modules: getIndyVdrProxyAgentModules(options.networks),
@@ -34,7 +28,13 @@ export function setupAgent(options: { networks: [IndyVdrPoolConfig, ...IndyVdrPo
 
 const getIndyVdrProxyAgentModules = (networks: [IndyVdrPoolConfig, ...IndyVdrPoolConfig[]]) => {
   return {
-    askar: new AskarModule({ ariesAskar }),
+    askar: new AskarModule({
+      askar,
+      store: {
+        id: 'indy-vdr-proxy',
+        key: 'indy-vdr-proxy',
+      },
+    }),
     anoncreds: new AnonCredsModule({
       registries: [new IndyVdrAnonCredsRegistry()],
       anoncreds,

@@ -1,21 +1,20 @@
-import type { Headers } from "../types"
 import type {
   AnonCredsRegistry,
   GetCredentialDefinitionReturn,
-  GetSchemaReturn,
-  RegisterSchemaOptions,
-  RegisterCredentialDefinitionOptions,
-  RegisterSchemaReturn,
-  RegisterCredentialDefinitionReturn,
-  GetRevocationStatusListReturn,
   GetRevocationRegistryDefinitionReturn,
+  GetRevocationStatusListReturn,
+  GetSchemaReturn,
+  RegisterCredentialDefinitionOptions,
+  RegisterCredentialDefinitionReturn,
   RegisterRevocationRegistryDefinitionReturn,
   RegisterRevocationStatusListReturn,
-} from "@credo-ts/anoncreds"
+  RegisterSchemaOptions,
+  RegisterSchemaReturn,
+} from '@credo-ts/anoncreds'
+import { type AgentContext, CacheModuleConfig, type CredoError } from '@credo-ts/core'
+import type { Headers } from '../types'
 
-import { CacheModuleConfig, type AgentContext, type CredoError } from "@credo-ts/core"
-
-import { indyVdrAnonCredsRegistryIdentifierRegex } from "./identifiers"
+import { indyVdrAnonCredsRegistryIdentifierRegex } from './identifiers'
 
 export interface CacheSettings {
   allowCaching: boolean
@@ -29,7 +28,7 @@ export interface IndyVdrProxyAnonCredsRegistryConfig {
 }
 
 export class IndyVdrProxyAnonCredsRegistry implements AnonCredsRegistry {
-  public readonly methodName = "indy"
+  public readonly methodName = 'indy'
 
   public readonly supportedIdentifier = indyVdrAnonCredsRegistryIdentifierRegex
 
@@ -40,7 +39,7 @@ export class IndyVdrProxyAnonCredsRegistry implements AnonCredsRegistry {
   private _headers?: Headers
 
   private async getHeaders(): Promise<Record<string, string> | undefined> {
-    if (typeof this._headers === "function") {
+    if (typeof this._headers === 'function') {
       return await this._headers()
     }
 
@@ -80,7 +79,7 @@ export class IndyVdrProxyAnonCredsRegistry implements AnonCredsRegistry {
       const response = await agentContext.config.agentDependencies.fetch(
         `${this.proxyBaseUrl}/schema/${encodeURIComponent(schemaId)}`,
         {
-          method: "GET",
+          method: 'GET',
           headers: await this.getHeaders(),
         }
       )
@@ -88,7 +87,7 @@ export class IndyVdrProxyAnonCredsRegistry implements AnonCredsRegistry {
         return {
           schemaId,
           resolutionMetadata: {
-            error: "failed",
+            error: 'failed',
             message: `server status code: ${response.status}`,
           },
           schemaMetadata: {},
@@ -119,7 +118,7 @@ export class IndyVdrProxyAnonCredsRegistry implements AnonCredsRegistry {
       return {
         schemaId,
         resolutionMetadata: {
-          error: "notFound",
+          error: 'notFound',
         },
         schemaMetadata: {},
       }
@@ -134,9 +133,9 @@ export class IndyVdrProxyAnonCredsRegistry implements AnonCredsRegistry {
       schemaMetadata: {},
       registrationMetadata: {},
       schemaState: {
-        state: "failed",
+        state: 'failed',
         schema: options.schema,
-        reason: "IndyVdrProxy does not support registration",
+        reason: 'IndyVdrProxy does not support registration',
       },
     }
   }
@@ -169,7 +168,7 @@ export class IndyVdrProxyAnonCredsRegistry implements AnonCredsRegistry {
       const response = await agentContext.config.agentDependencies.fetch(
         `${this.proxyBaseUrl}/credential-definition/${encodeURIComponent(credentialDefinitionId)}`,
         {
-          method: "GET",
+          method: 'GET',
           headers: await this.getHeaders(),
         }
       )
@@ -178,7 +177,7 @@ export class IndyVdrProxyAnonCredsRegistry implements AnonCredsRegistry {
         return {
           credentialDefinitionId,
           resolutionMetadata: {
-            error: "failed",
+            error: 'failed',
             message: `server status code: ${response.status}`,
           },
           credentialDefinitionMetadata: {},
@@ -211,7 +210,7 @@ export class IndyVdrProxyAnonCredsRegistry implements AnonCredsRegistry {
         credentialDefinitionId,
         credentialDefinitionMetadata: {},
         resolutionMetadata: {
-          error: "notFound",
+          error: 'notFound',
           message: `unable to resolve credential definition: ${(error as CredoError).message}`,
         },
       }
@@ -226,9 +225,9 @@ export class IndyVdrProxyAnonCredsRegistry implements AnonCredsRegistry {
       credentialDefinitionMetadata: {},
       registrationMetadata: {},
       credentialDefinitionState: {
-        state: "failed",
+        state: 'failed',
         credentialDefinition: options.credentialDefinition,
-        reason: "IndyVdrProxy does not support registration",
+        reason: 'IndyVdrProxy does not support registration',
       },
     }
   }
@@ -261,7 +260,7 @@ export class IndyVdrProxyAnonCredsRegistry implements AnonCredsRegistry {
       const response = await agentContext.config.agentDependencies.fetch(
         `${this.proxyBaseUrl}/revocation-registry-definition/${encodeURIComponent(revocationRegistryDefinitionId)}`,
         {
-          method: "GET",
+          method: 'GET',
           headers: await this.getHeaders(),
         }
       )
@@ -269,7 +268,7 @@ export class IndyVdrProxyAnonCredsRegistry implements AnonCredsRegistry {
         return {
           revocationRegistryDefinitionId,
           resolutionMetadata: {
-            error: "failed",
+            error: 'failed',
             message: `server status code: ${response.status}`,
           },
           revocationRegistryDefinitionMetadata: {},
@@ -304,7 +303,7 @@ export class IndyVdrProxyAnonCredsRegistry implements AnonCredsRegistry {
 
       return {
         resolutionMetadata: {
-          error: "notFound",
+          error: 'notFound',
           message: `unable to resolve revocation registry definition: ${(error as CredoError)?.message}`,
         },
         revocationRegistryDefinitionId,
@@ -318,8 +317,8 @@ export class IndyVdrProxyAnonCredsRegistry implements AnonCredsRegistry {
       registrationMetadata: {},
       revocationRegistryDefinitionMetadata: {},
       revocationRegistryDefinitionState: {
-        state: "failed",
-        reason: "IndyVdrProxy does not support registration",
+        state: 'failed',
+        reason: 'IndyVdrProxy does not support registration',
       },
     }
   }
@@ -333,14 +332,14 @@ export class IndyVdrProxyAnonCredsRegistry implements AnonCredsRegistry {
       const response = await agentContext.config.agentDependencies.fetch(
         `${this.proxyBaseUrl}/revocation-status-list/${encodeURIComponent(revocationRegistryId)}/${timestamp}`,
         {
-          method: "GET",
+          method: 'GET',
           headers: await this.getHeaders(),
         }
       )
       if (!response.ok) {
         return {
           resolutionMetadata: {
-            error: "failed",
+            error: 'failed',
             message: `server status code: ${response.status}`,
           },
           revocationStatusListMetadata: {},
@@ -360,7 +359,7 @@ export class IndyVdrProxyAnonCredsRegistry implements AnonCredsRegistry {
 
       return {
         resolutionMetadata: {
-          error: "notFound",
+          error: 'notFound',
           // eslint-disable-next-line max-len
           message: `Error retrieving revocation registry delta '${revocationRegistryId}' from ledger, potentially revocation interval ends before revocation registry creation: ${
             (error as CredoError)?.message
@@ -376,8 +375,8 @@ export class IndyVdrProxyAnonCredsRegistry implements AnonCredsRegistry {
       registrationMetadata: {},
       revocationStatusListMetadata: {},
       revocationStatusListState: {
-        state: "failed",
-        reason: "IndyVdrProxy does not support registration",
+        state: 'failed',
+        reason: 'IndyVdrProxy does not support registration',
       },
     }
   }

@@ -11,15 +11,8 @@
     "build"
   ],
   "scripts": {
-    "build": "yarn run clean && yarn run compile",
-    "clean": "rimraf -rf ./build",
-    "compile": "tsc -p tsconfig.build.json",
-    "prepublishOnly": "yarn run build",
-    "check-types": "tsc --noEmit -p tsconfig.build.json",
-    "check-format": "yarn prettier --check",
-    "prettier": "prettier --ignore-path .gitignore '**/*.+(js|json|ts|md|yml|yaml)'",
-    "release": "release-it",
-    "test": "jest"
+    "build": "tsdown --config-loader unconfig",
+    "prepublishOnly": "pnpm run build"
   },
   "repository": {
     "type": "git",
@@ -33,23 +26,17 @@
     "access": "public"
   },
   "devDependencies": {
-    "@credo-ts/askar": "0.5.15",
-    "@types/jest": "^26.0.23",
+    "@credo-ts/askar": "^0.6.1",
     "@types/uuid": "^9.0.0",
-    "@typescript-eslint/eslint-plugin": "^4.28.2",
-    "@typescript-eslint/parser": "^4.17.0",
-    "jest": "^27.0.4",
-    "prettier": "^2.2.1",
+    "nock": "^14.0.10",
     "reflect-metadata": "^0.1.13",
     "rimraf": "^6.0.1",
-    "ts-jest": "^27.0.4",
     "ts-node": "^10.8.1",
-    "typescript": "~4.9.5"
+    "typescript": "~5.9.3"
   },
   "dependencies": {
-    "@credo-ts/anoncreds": "0.5.15",
-    "@credo-ts/core": "0.5.15",
-    "nock": "^13.5.4",
+    "@credo-ts/anoncreds": "^0.6.1",
+    "@credo-ts/core": "^0.6.1",
     "uuid": "^9.0.0"
   }
 }

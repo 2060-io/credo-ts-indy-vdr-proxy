@@ -1,6 +1,6 @@
-import { DidResolutionResult } from "@credo-ts/core"
-import { Controller, Get, Param } from "@nestjs/common"
-import { AgentService } from "./agent.service"
+import type { DidResolutionResult } from '@credo-ts/core'
+import { Controller, Get, Param } from '@nestjs/common'
+import { AgentService } from './agent.service'
 
 interface GetDidParams {
   did: string
@@ -8,11 +8,11 @@ interface GetDidParams {
 
 const legacyIndyDidRegex = /^[a-zA-Z0-9]{21,22}$/
 
-@Controller("did")
+@Controller('did')
 export class DidController {
   constructor(private readonly agentService: AgentService) {}
 
-  @Get("/:did")
+  @Get('/:did')
   public async getDid(@Param() params: GetDidParams): Promise<DidResolutionResult> {
     const agent = await this.agentService.getAgent()
 
