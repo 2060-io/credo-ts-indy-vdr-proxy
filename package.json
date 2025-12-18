@@ -1,5 +1,6 @@
 {
   "name": "credo-ts-indy-vdr-proxy",
+  "type": "module",
   "private": true,
   "license": "Apache-2.0",
   "description": "Monorepo containing Indy VDR Proxy client and server for Credo",
