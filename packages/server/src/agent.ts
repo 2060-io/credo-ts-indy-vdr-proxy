@@ -1,7 +1,3 @@
-import { anoncreds } from '@hyperledger/anoncreds-nodejs'
-import { indyVdr } from '@hyperledger/indy-vdr-nodejs'
-import { askar } from '@openwallet-foundation/askar-nodejs'
-
 import { AnonCredsModule } from '@credo-ts/anoncreds'
 import { AskarModule } from '@credo-ts/askar'
 import { Agent, ConsoleLogger, DidsModule, type Logger, LogLevel } from '@credo-ts/core'
@@ -13,6 +9,9 @@ import {
   IndyVdrSovDidResolver,
 } from '@credo-ts/indy-vdr'
 import { agentDependencies } from '@credo-ts/node'
+import { anoncreds } from '@hyperledger/anoncreds-nodejs'
+import { indyVdr } from '@hyperledger/indy-vdr-nodejs'
+import { askar } from '@openwallet-foundation/askar-nodejs'
 
 export type IndyVdrProxyAgent = Agent<ReturnType<typeof getIndyVdrProxyAgentModules>>
 
