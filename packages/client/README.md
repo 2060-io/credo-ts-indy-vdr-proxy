@@ -8,7 +8,7 @@ It works with its companion [Credo Indy VDR Proxy Server](https://github.com/206
 
 ## Usage
 
-As of Credo 0.5.0, the most convenient way to use the classes provided by this package is by injecting them in Agent constructor:
+As of Credo 0.6.0, the most convenient way to use the classes provided by this package is by injecting them in Agent constructor:
 
 ```ts
 import { IndyVdrProxyAnonCredsRegistry, IndyVdrProxyDidResolver } from 'credo-ts-indy-vdr-proxy-client'
