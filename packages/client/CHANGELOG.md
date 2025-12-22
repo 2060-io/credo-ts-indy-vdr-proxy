@@ -1,5 +1,12 @@
 # Changelog
 
+### [0.2.6](https://www.github.com/2060-io/credo-ts-indy-vdr-proxy/compare/credo-ts-indy-vdr-proxy-client-v0.2.5...credo-ts-indy-vdr-proxy-client-v0.2.6) (2025-12-22)
+
+
+### Bug Fixes
+
+* update CI to use Trusted Publishing ([7ce225a](https://www.github.com/2060-io/credo-ts-indy-vdr-proxy/commit/7ce225acfeab805cae690662055877c59037b4e0))
+
 ### [0.2.4](https://www.github.com/2060-io/credo-ts-indy-vdr-proxy/compare/credo-ts-indy-vdr-proxy-client-v0.2.3...credo-ts-indy-vdr-proxy-client-v0.2.4) (2025-06-06)
 
 
