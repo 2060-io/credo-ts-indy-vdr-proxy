@@ -5,8 +5,8 @@
   "author": "2060.io",
   "homepage": "https://github.com/2060-io/credo-ts-indy-vdr-proxy",
   "license": "ISC",
-  "main": "build/index.js",
-  "types": "build/index.js",
+  "main": "build/index.mjs",
+  "types": "build/index.mjs",
   "files": [
     "build"
   ],
